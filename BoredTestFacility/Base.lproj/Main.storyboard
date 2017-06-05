@@ -47,19 +47,19 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bored." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rZp-QZ-Q9m">
-                                        <rect key="frame" x="159.5" y="7" width="57" height="31.5"/>
+                                        <rect key="frame" x="159" y="6.5" width="57" height="31.5"/>
                                         <fontDescription key="fontDescription" name="coffee+teademo-Regular" family="coffee+tea demo" pointSize="30"/>
                                         <color key="textColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Menu." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e7j-Cj-297">
-                                        <rect key="frame" x="7" y="11.5" width="39" height="21"/>
+                                        <rect key="frame" x="7" y="12" width="39" height="21"/>
                                         <fontDescription key="fontDescription" name="coffee+teademo-Regular" family="coffee+tea demo" pointSize="20"/>
                                         <color key="textColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filter." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2uB-ag-lX6">
-                                        <rect key="frame" x="331" y="12" width="37" height="21"/>
+                                        <rect key="frame" x="331" y="11.5" width="37" height="21"/>
                                         <fontDescription key="fontDescription" name="coffee+teademo-Regular" family="coffee+tea demo" pointSize="20"/>
                                         <color key="textColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -79,8 +79,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gbe-Eg-XIs">
                                 <rect key="frame" x="0.0" y="64" width="375" height="80"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Showing X Result(s)!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6cM-qp-FWa">
-                                        <rect key="frame" x="123.5" y="49" width="129" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Getting Result(s)!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6cM-qp-FWa">
+                                        <rect key="frame" x="133.5" y="49" width="109" height="21"/>
                                         <fontDescription key="fontDescription" name="coffee+teademo-Regular" family="coffee+tea demo" pointSize="20"/>
                                         <color key="textColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -115,7 +115,7 @@
                     <connections>
                         <outlet property="carousel" destination="nNW-eV-r3y" id="C6u-LZ-0lc"/>
                         <outlet property="resultsAmountLabel" destination="6cM-qp-FWa" id="wGb-7w-xTU"/>
-                        <segue destination="RoM-6E-Ft1" kind="presentation" identifier="toDetail" modalTransitionStyle="coverVertical" id="Vuk-sl-fX0"/>
+                        <segue destination="RoM-6E-Ft1" kind="presentation" identifier="detailVC" modalTransitionStyle="coverVertical" id="Vuk-sl-fX0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -19,6 +19,8 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
     
     var currentLocation = CLLocation()
     
+    var selectedPlace = PlaceInfo()
+    
     @IBOutlet weak var carousel: iCarousel!
     @IBOutlet weak var resultsAmountLabel: UILabel!
     
@@ -94,16 +96,16 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
     
     func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
         var k = Array(placeDict.keys)
-        let pI:PlaceInfo = placeDict[k[index]]!
+        selectedPlace = placeDict[k[index]]!
         if carousel.currentItemIndex == index{
-            let dVC = storyboard?.instantiateViewController(withIdentifier: "detailVC") as! DetailViewController
-            dVC.placeInfo = pI
-            navigationController?.pushViewController(dVC, animated: true)
+            performSegue(withIdentifier: "detailVC", sender: carousel);
         }
     }
+
     
-    func navigateTo(pI:PlaceInfo){
-        
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let dVC = segue.destination as! DetailViewController
+        dVC.placeInfo = selectedPlace
     }
     
     public func catchNotification(notification:Notification) -> Void {

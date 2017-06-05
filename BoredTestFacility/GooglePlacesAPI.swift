@@ -11,11 +11,13 @@ import Alamofire
 import GooglePlaces
 
 public class GooglePlacesAPI{
+    let KEY_GOOGLE = "AIzaSyCpmvfI0yYJRIx04H1rhVIIB4ywEgw4I5w"
+    
     func searchNearby(lat: Double, long:Double){
 
         let searchTypes = ["movie_theater": 5, "museum": 5, "restaurant": 10, "bowling_alley": 1, "cafe": 5, "library": 5, "night_club": 5, "shopping_mall": 5, "park": 5]
         let searchUrl_0 = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=";
-        let searchUrl_1 = "&radius=40233.6&key=AIzaSyCpmvfI0yYJRIx04H1rhVIIB4ywEgw4I5w"
+        let searchUrl_1 = "&radius=40233.6&key=\(KEY_GOOGLE)"
         let searchUrl_type = "&type="
         
         for (type, count) in searchTypes {
@@ -34,7 +36,7 @@ public class GooglePlacesAPI{
                             let name = results[Int(num)]["name"].string!
                             let id = results[Int(num)]["place_id"].string!
                             
-                            photo = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=\(photo)&key=AIzaSyCpmvfI0yYJRIx04H1rhVIIB4ywEgw4I5w"
+                            photo = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=\(photo)&key=\(self.KEY_GOOGLE)"
                             
                             var lat_place = "0.0"
                             var long_place = "0.0"
