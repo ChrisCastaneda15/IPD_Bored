@@ -36,3 +36,36 @@ class PlaceInfo{
         self.longitude = long;
     }
 }
+
+class MovieDetail {
+    var name: String;
+    var runtime: String;
+    var rating: String;
+    var showings: [String];
+    var year: Int
+    var type: String
+    
+    init(){
+        self.name = "MOVIENAME"
+        self.runtime = "0H0M"
+        self.rating = "rated_r"
+        self.showings = [String]()
+        self.year = 2017
+        self.type = "N/A"
+    }
+    
+    init(name: String, runtime: String, rating: String, showings: [String], year: Int, type: String) {
+        self.name = name
+        self.runtime = runtime
+        self.rating = rating
+        self.showings = showings
+        self.year = year
+        self.type = type
+    }
+}
+
+
+
+
+
+

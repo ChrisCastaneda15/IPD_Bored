@@ -98,14 +98,31 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
         var k = Array(placeDict.keys)
         selectedPlace = placeDict[k[index]]!
         if carousel.currentItemIndex == index{
-            performSegue(withIdentifier: "detailVC", sender: carousel);
+            moveToDetail(type: selectedPlace.placeType)
+            
         }
     }
-
+    
+    func moveToDetail(type: String){
+        switch type {
+        case "movie_theater":
+            performSegue(withIdentifier: "movieTheaterDetailVC", sender: carousel);
+        default:
+            performSegue(withIdentifier: "detailVC", sender: carousel);
+        }
+        
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let dVC = segue.destination as! DetailViewController
-        dVC.placeInfo = selectedPlace
+        
+        switch selectedPlace.placeType {
+        case "movie_theater":
+            let mTDVC = segue.destination as! MovieTheaterDetailViewController
+            mTDVC.placeInfo = selectedPlace
+        default:
+            let dVC = segue.destination as! DetailViewController
+            dVC.placeInfo = selectedPlace
+        }
     }
     
     public func catchNotification(notification:Notification) -> Void {

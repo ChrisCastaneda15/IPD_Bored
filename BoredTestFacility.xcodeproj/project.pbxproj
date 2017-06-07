@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		545C6B134F775159EF70AA2D /* Pods_BoredTestFacility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7BA80EE2E5064D9F0329952 /* Pods_BoredTestFacility.framework */; };
+		8377E7861EE75F0A0072A211 /* MovieTheaterDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8377E7851EE75F0A0072A211 /* MovieTheaterDetailViewController.swift */; };
+		8377E78B1EE762F70072A211 /* TheaterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8377E7891EE762F70072A211 /* TheaterTableViewCell.swift */; };
+		8377E78C1EE762F70072A211 /* TheaterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8377E78A1EE762F70072A211 /* TheaterTableViewCell.xib */; };
 		837880C21EE4A4D80021A47A /* coffee+teademo-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 837880C01EE4A47B0021A47A /* coffee+teademo-Regular.ttf */; };
 		837880C61EE4B3F60021A47A /* PlaceCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837880C51EE4B3F60021A47A /* PlaceCarouselView.swift */; };
 		837880C81EE4B4060021A47A /* PlaceCarouselView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 837880C71EE4B4060021A47A /* PlaceCarouselView.xib */; };
@@ -24,6 +27,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8377E7851EE75F0A0072A211 /* MovieTheaterDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieTheaterDetailViewController.swift; sourceTree = "<group>"; };
+		8377E7891EE762F70072A211 /* TheaterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheaterTableViewCell.swift; sourceTree = "<group>"; };
+		8377E78A1EE762F70072A211 /* TheaterTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TheaterTableViewCell.xib; sourceTree = "<group>"; };
 		837880C01EE4A47B0021A47A /* coffee+teademo-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "coffee+teademo-Regular.ttf"; sourceTree = "<group>"; };
 		837880C51EE4B3F60021A47A /* PlaceCarouselView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceCarouselView.swift; sourceTree = "<group>"; };
 		837880C71EE4B4060021A47A /* PlaceCarouselView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceCarouselView.xib; sourceTree = "<group>"; };
@@ -66,6 +72,33 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		8377E7871EE75F270072A211 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				83F9F78A1EDDE54E00E2FF6E /* SwiftyJSON.swift */,
+				839DF01A1EE0A7980027DDAF /* Bored-Bridging-Header.h */,
+			);
+			name = Tools;
+			sourceTree = "<group>";
+		};
+		8377E7881EE75F3C0072A211 /* Custom Classes */ = {
+			isa = PBXGroup;
+			children = (
+				83F9F7881EDDE1F500E2FF6E /* GooglePlacesAPI.swift */,
+				83F9F78C1EDDF40C00E2FF6E /* Classes.swift */,
+			);
+			name = "Custom Classes";
+			sourceTree = "<group>";
+		};
+		8377E78D1EE762FB0072A211 /* TheaterCell */ = {
+			isa = PBXGroup;
+			children = (
+				8377E7891EE762F70072A211 /* TheaterTableViewCell.swift */,
+				8377E78A1EE762F70072A211 /* TheaterTableViewCell.xib */,
+			);
+			name = TheaterCell;
+			sourceTree = "<group>";
+		};
 		837880BF1EE4A4470021A47A /* Font */ = {
 			isa = PBXGroup;
 			children = (
@@ -104,14 +137,14 @@
 		83911B7A1EDDDC9700526994 /* BoredTestFacility */ = {
 			isa = PBXGroup;
 			children = (
-				839DF01A1EE0A7980027DDAF /* Bored-Bridging-Header.h */,
-				83F9F78A1EDDE54E00E2FF6E /* SwiftyJSON.swift */,
+				8377E7871EE75F270072A211 /* Tools */,
 				83911B7B1EDDDC9700526994 /* AppDelegate.swift */,
 				83911B7F1EDDDC9700526994 /* Main.storyboard */,
 				83911B7D1EDDDC9700526994 /* ViewController.swift */,
 				837880CA1EE4D8B30021A47A /* DetailViewController.swift */,
-				83F9F7881EDDE1F500E2FF6E /* GooglePlacesAPI.swift */,
-				83F9F78C1EDDF40C00E2FF6E /* Classes.swift */,
+				8377E7851EE75F0A0072A211 /* MovieTheaterDetailViewController.swift */,
+				8377E78D1EE762FB0072A211 /* TheaterCell */,
+				8377E7881EE75F3C0072A211 /* Custom Classes */,
 				83911B851EDDDC9700526994 /* Assets.xcassets */,
 				837880C91EE4B4DA0021A47A /* CarouselView */,
 				83911B871EDDDC9700526994 /* LaunchScreen.storyboard */,
@@ -194,6 +227,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				837880C21EE4A4D80021A47A /* coffee+teademo-Regular.ttf in Resources */,
+				8377E78C1EE762F70072A211 /* TheaterTableViewCell.xib in Resources */,
 				83911B891EDDDC9700526994 /* LaunchScreen.storyboard in Resources */,
 				83911B861EDDDC9700526994 /* Assets.xcassets in Resources */,
 				837880C81EE4B4060021A47A /* PlaceCarouselView.xib in Resources */,
@@ -258,6 +292,8 @@
 			files = (
 				83911B7E1EDDDC9700526994 /* ViewController.swift in Sources */,
 				83911B841EDDDC9700526994 /* BoredTestFacility.xcdatamodeld in Sources */,
+				8377E7861EE75F0A0072A211 /* MovieTheaterDetailViewController.swift in Sources */,
+				8377E78B1EE762F70072A211 /* TheaterTableViewCell.swift in Sources */,
 				837880C61EE4B3F60021A47A /* PlaceCarouselView.swift in Sources */,
 				83F9F78D1EDDF40C00E2FF6E /* Classes.swift in Sources */,
 				83911B7C1EDDDC9700526994 /* AppDelegate.swift in Sources */,

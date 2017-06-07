@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import GooglePlaces
 
 class DetailViewController: UIViewController, MKMapViewDelegate {
 
@@ -18,14 +19,35 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
     
     var placeInfo = PlaceInfo();
     
+    var placesClient = GMSPlacesClient()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        UIApplication.shared.statusBarStyle = .lightContent
+        
         placeNameLabel.text = placeInfo.name
         placeImageView.sd_setImage(with: URL(string: placeInfo.imageString), placeholderImage: UIImage(named: "placeholder.png"))
         
         let placeLocation = CLLocation(latitude: Double(placeInfo.latitude)!, longitude: Double(placeInfo.longitude)!)
         centerMapOnLocation(location: placeLocation)
+        
+        placesClient.lookUpPlaceID(placeInfo.placeID, callback: { (place, error) -> Void in
+            if let error = error {
+                print("lookup place id query error: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let place = place else {
+                print("No place details for \(self.placeInfo.placeID)")
+                return
+            }
+            
+            print("Place name \(place.name)")
+            print("Place address \(place.formattedAddress)")
+            print("Place placeID \(place.placeID)")
+            print("Place attributions \(place.priceLevel)")
+        })
 
     }
     

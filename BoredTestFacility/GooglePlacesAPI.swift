@@ -14,7 +14,7 @@ public class GooglePlacesAPI{
     let KEY_GOOGLE = "AIzaSyCpmvfI0yYJRIx04H1rhVIIB4ywEgw4I5w"
     
     func searchNearby(lat: Double, long:Double){
-
+        
         let searchTypes = ["movie_theater": 5, "museum": 5, "restaurant": 10, "bowling_alley": 1, "cafe": 5, "library": 5, "night_club": 5, "shopping_mall": 5, "park": 5]
         let searchUrl_0 = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=";
         let searchUrl_1 = "&radius=40233.6&key=\(KEY_GOOGLE)"
@@ -40,7 +40,7 @@ public class GooglePlacesAPI{
                             
                             var lat_place = "0.0"
                             var long_place = "0.0"
-                        
+                            
                             
                             if let location = results[Int(num)]["geometry"]["location"].dictionary{
                                 lat_place = location["lat"]!.double!.description
@@ -126,5 +126,88 @@ public class GooglePlacesAPI{
         }
         
     }
-
+    
+    func getTheaterShowtimes(lat: Double, lng: Double){
+        let theaterUrl_1 = "http://data.tmsapi.com/v1.1/movies/showings?startDate="
+        let theaterUrl_2 = "&lat=\(lat)&lng=\(lng)&radius=1&api_key=9wg76s8xsyc4whvwus4fk62r"
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let currentDate = formatter.string(from: date)
+        let theaterUrl_final = theaterUrl_1 + currentDate + theaterUrl_2
+        
+        var theaterID = ""
+        
+        var movies = [MovieDetail]()
+        
+        Alamofire.request(theaterUrl_final).responseJSON { response in
+            if let Json = response.data{
+                let data = JSON(data: Json);
+                let results = data.array
+                for x in 0..<results!.count{
+                    if let showtimes = results![x]["showtimes"].array{
+                        if x == 0 {
+                            var theaterInfo = showtimes[0]["theatre"].dictionary!
+                            theaterID = theaterInfo["id"]!.string!
+                        }
+                        let name = results![x]["title"].string!
+                        var runtime = "0H0M"
+                        if let rt = results![x]["runTime"].string{
+                            runtime = rt
+                            runtime.remove(at: runtime.startIndex)
+                            runtime.remove(at: runtime.startIndex)
+                        }
+                        let type = results![x]["subType"].string!
+                    
+                        var year = 2017
+                        if let y = results![x]["releaseYear"].int{
+                            year = y
+                        }
+                        
+                        var rating = ""
+                        if let ratings = results![x]["ratings"].array{
+                            rating = ratings[0]["code"].string!
+                        }
+                        var showings = [String]()
+                        for time in showtimes{
+                            if theaterID == time["theatre"]["id"].string!{
+                               showings.append(time["dateTime"].string!)
+                            }
+                        }
+                        
+                        if showings.count > 0 {
+                            movies.append(MovieDetail(name: name, runtime: runtime, rating: rating, showings: showings, year: year, type: type))
+                        }
+                    }
+                }
+                
+                let nc = NotificationCenter.default
+                nc.post(name:Notification.Name(rawValue:"MOVIEINFO"),object: nil, userInfo: ["movies":movies])
+            }
+        }
+    }
+    
+    func getMoviePoster(title: String, year: Int, index: Int){
+        var name = title.replacingOccurrences(of: ": An IMAX 3D Experience", with: "")
+        name = name.replacingOccurrences(of: "3D", with: "")
+        name = name.replacingOccurrences(of: " ", with: "+")
+        Alamofire.request("http://www.omdbapi.com/?t=\(name)&y=\(year)&apikey=1b307ed3").responseJSON { response in
+            if let Json = response.data{
+                let data = JSON(data: Json);
+                if let poster = data["Poster"].string{
+                    print(poster);
+                    let nc = NotificationCenter.default
+                    nc.post(name:Notification.Name(rawValue:"MOVIEPOSTER"),object: nil, userInfo: ["moviePoster":poster, "index": index])
+                }
+                else {
+                    let nc = NotificationCenter.default
+                    nc.post(name:Notification.Name(rawValue:"MOVIEPOSTER"),object: nil, userInfo: ["moviePoster":"N/A", "index": index])
+                }
+            }
+        }
+    }
 }
+        
+    
+
+
