@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MapKit
 
-class MovieTheaterDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MovieTheaterDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate {
     let googlePlacesAPI = GooglePlacesAPI();
     var placeInfo = PlaceInfo()
     var moviesInTheater = [MovieDetail]()
@@ -17,6 +18,9 @@ class MovieTheaterDetailViewController: UIViewController, UITableViewDataSource,
     @IBOutlet weak var placeNameLabel: UILabel!
     @IBOutlet weak var placeImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var navBar: UIView!
+    @IBOutlet weak var showtimesBar: UIView!
     
     
     override func viewDidLoad() {
@@ -30,7 +34,20 @@ class MovieTheaterDetailViewController: UIViewController, UITableViewDataSource,
         
         // Do any additional setup after loading the view.
         
-        placeNameLabel.text = placeInfo.name
+        navBar.layer.shadowColor = UIColor.black.cgColor
+        navBar.layer.shadowOpacity = 0.85;
+        navBar.layer.shadowRadius = 10;
+        //navBar.layer.shouldRasterize = true;
+        
+        showtimesBar.layer.shadowColor = UIColor.black.cgColor
+        showtimesBar.layer.shadowOpacity = 0.85;
+        showtimesBar.layer.shadowRadius = 10;
+        //showtimesBar.layer.shouldRasterize = true;
+        
+        let placeLocation = CLLocation(latitude: Double(placeInfo.latitude)!, longitude: Double(placeInfo.longitude)!)
+        centerMapOnLocation(location: placeLocation)
+        
+        placeNameLabel.text = placeInfo.name + "."
         placeImageView.sd_setImage(with: URL(string: placeInfo.imageString), placeholderImage: UIImage(named: "placeholder.png"))
         tableView.register(UINib(nibName: "TheaterTableViewCell", bundle: nil), forCellReuseIdentifier: "cellReuse")
         tableView.backgroundColor = UIColor.clear
@@ -117,7 +134,28 @@ class MovieTheaterDetailViewController: UIViewController, UITableViewDataSource,
         
         return cell
     }
+    
+    func centerMapOnLocation(location: CLLocation) {
+        let regionRadius: CLLocationDistance = 1000
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius * 2.0, regionRadius * 2.0)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = location.coordinate
+        mapView.addAnnotation(annotation)
+        mapView.setRegion(coordinateRegion, animated: true)
+    }
 
+    @IBAction func openInMaps(_ sender: Any) {
+        let lat:CLLocationDegrees = Double(placeInfo.latitude)!
+        let lng:CLLocationDegrees = Double(placeInfo.longitude)!
+        let coordinate = CLLocationCoordinate2DMake(lat, lng)
+        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary:nil))
+        mapItem.name = placeInfo.name
+        mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
+    }
+    
+    
+    
+    
     @IBAction func close(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }

@@ -12,10 +12,16 @@ import GooglePlaces
 
 public class GooglePlacesAPI{
     let KEY_GOOGLE = "AIzaSyCpmvfI0yYJRIx04H1rhVIIB4ywEgw4I5w"
+    let KEY_TICKETMASTER = "2oeLG86JkAZfAOuAWSLCaZniWyzFKTfO"
+    let KEY_TMS = "9wg76s8xsyc4whvwus4fk62r"
+    let ZOMATO_HEADER: HTTPHeaders = [
+        "user-key": "2780090e35e9d807b1f793e96b2a6f69"
+    ]
+    let KEY_WEATHER = "b5d6591a8a63a613"
     
     func searchNearby(lat: Double, long:Double){
         
-        let searchTypes = ["movie_theater": 5, "museum": 5, "restaurant": 10, "bowling_alley": 1, "cafe": 5, "library": 5, "night_club": 5, "shopping_mall": 5, "park": 5]
+        let searchTypes = ["movie_theater": 5, "museum": 5, "bowling_alley": 1, "cafe": 5, "library": 5, "night_club": 5, "shopping_mall": 5, "park": 5]
         let searchUrl_0 = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=";
         let searchUrl_1 = "&radius=40233.6&key=\(KEY_GOOGLE)"
         let searchUrl_type = "&type="
@@ -81,7 +87,7 @@ public class GooglePlacesAPI{
     func getBestEvents(lat: Double, long:Double){
         let ticketmasterUrl_1 = "https://app.ticketmaster.com/discovery/v2/events.json?size=7&latlong="
         let ticketmasterUrl_2 = "&radius=20"
-        let ticketmasterUrl_3 = "&apikey=2oeLG86JkAZfAOuAWSLCaZniWyzFKTfO"
+        let ticketmasterUrl_3 = "&apikey=\(KEY_TICKETMASTER)"
         let ticketmasterUrl_final = ticketmasterUrl_1 + "\(lat),\(long)" + ticketmasterUrl_2 + ticketmasterUrl_3
         Alamofire.request(ticketmasterUrl_final).responseJSON { response in
             if let Json = response.data{
@@ -129,7 +135,7 @@ public class GooglePlacesAPI{
     
     func getTheaterShowtimes(lat: Double, lng: Double){
         let theaterUrl_1 = "http://data.tmsapi.com/v1.1/movies/showings?startDate="
-        let theaterUrl_2 = "&lat=\(lat)&lng=\(lng)&radius=1&api_key=9wg76s8xsyc4whvwus4fk62r"
+        let theaterUrl_2 = "&lat=\(lat)&lng=\(lng)&radius=1&api_key=\(KEY_TMS)"
         let date = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
@@ -195,7 +201,6 @@ public class GooglePlacesAPI{
             if let Json = response.data{
                 let data = JSON(data: Json);
                 if let poster = data["Poster"].string{
-                    print(poster);
                     let nc = NotificationCenter.default
                     nc.post(name:Notification.Name(rawValue:"MOVIEPOSTER"),object: nil, userInfo: ["moviePoster":poster, "index": index])
                 }
@@ -206,8 +211,152 @@ public class GooglePlacesAPI{
             }
         }
     }
-}
-        
     
+    func getZomatoID(lat: Double, lng: Double){
+        Alamofire.request("https://developers.zomato.com/api/v2.1/cities?lat=\(lat)&lon=\(lng)", headers: ZOMATO_HEADER).responseJSON { response in
+            if let Json = response.data{
+                let data = JSON(data: Json);
+                if let id = data["location_suggestions"][0].dictionary{
+                    self.getZomatoRestaurants(id: (id["id"]?.int!)!)
+                }
+            }
+        }
+    }
+    
+    func getZomatoRestaurants(id: Int){
+        Alamofire.request("https://developers.zomato.com/api/v2.1/search?entity_id=\(id)&entity_type=city&collection_id=1", headers: ZOMATO_HEADER).responseJSON { response in
+            if let Json = response.data{
+                let data = JSON(data: Json);
+                if let restaurants = data["restaurants"].array{
+                    for res in restaurants{
+                        let r = res["restaurant"].dictionary!
+                        let name = r["name"]!.string!
+                        let id = r["id"]!.int!
+                        var lat = ""
+                        var lng = ""
+                        if let location = r["location"]?.dictionary{
+                            lat = (location["latitude"]?.string!)!
+                            lng = (location["longitude"]?.string!)!
+                        }
+                        var image = ""
+                        if let img = r["thumb"]?.string{
+                            image = img
+                        }
+                        let nc = NotificationCenter.default
+                        nc.post(name:Notification.Name(rawValue:"PLACEINFO"),object: nil, userInfo: ["name":name, "placeID":id.description, "image":image, "type":"restaurant", "lat":lat, "long":lng])
+                    }
+                }
+            }
+        }
+    }
+    
+    func getZomatoInfo(id: String){
+        print(id);
+        Alamofire.request("https://developers.zomato.com/api/v2.1/restaurant?res_id=\(id)", headers: ZOMATO_HEADER).responseJSON { response in
+            if let Json = response.data{
+                let data = JSON(data: Json);
+                print(data);
+                let info = data.dictionary
+                
+                if let location = info!["location"]?.dictionary {
+                    let lat = location["latitude"]?.string!
+                    let lng = location["longitude"]?.string!
+                    let name = info!["name"]?.string!
+                    let cuis = info!["cuisines"]?.string!
+                    let curr = info!["currency"]?.string!
+                    let price = info!["price_range"]?.int!
+                    let avg = info!["average_cost_for_two"]?.int!
+                    let menu = info!["menu_url"]?.string!
+                    let url = info!["url"]?.string!
+                    
+                    let place = RestaurantDetail(name: name!, lat: lat!, lng: lng!, serves: cuis!, avg: avg!, price: price!, currency: curr!, menu: menu!, link: url!)
+                    
+                    self.getRestaurantInfo(place: place)
+                }
+            }
+        }
+    }
+    
+    func getRestaurantInfo(place: RestaurantDetail){
+        Alamofire.request("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=\(place.lat),\(place.lng)&radius=100&type=restaurant&keyword=\(place.name.replacingOccurrences(of: " ", with: ""))&key=\(KEY_GOOGLE)").responseJSON { response in
+            if let Json = response.data{
+                let data = JSON(data: Json);
+                if let results = data["results"].array {
+                    var photo = ""
+                    let photos = results[0]["photos"].array
+                    if let image = photos{
+                        photo = image[0]["photo_reference"].string!
+                    }
+                    photo = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=\(photo)&key=\(self.KEY_GOOGLE)"
+                    
+                    var open = "N/A"
+                    
+                    if let hours = results[0]["opening_hours"].dictionary{
+                        if hours["open_now"]?.bool == true{
+                            open = "Yes!"
+                        }
+                        else {
+                            open = "No :("
+                        }
+                    }
+
+                    
+                    let nc = NotificationCenter.default
+                    nc.post(name:Notification.Name(rawValue:"RESTINFO"),object: nil, userInfo: ["place": place, "hours": open, "photo": photo])
+                }
+            }
+        }
+    }
+    
+    func getWeather(wUrl_2: String, countryCode: String){
+        let wUrl_1 = "http://api.wunderground.com/api/\(KEY_WEATHER)/hourly/q/"
+        var hours = [String]()
+        var temps = [String]()
+        var pops = [String]()
+        var imgs = [String]()
+        Alamofire.request(wUrl_1 + wUrl_2).responseJSON { response in
+            if let Json = response.data{
+                let data = JSON(data: Json);
+                if let hourlyForecast = data["hourly_forecast"].array{
+                    for hour in hourlyForecast {
+                        if let time = hour["FCTTIME"].dictionary{
+                            var h = Int((time["hour"]?.string!)!)!
+                            let l = 24 - Int(hourlyForecast[0]["FCTTIME"]["hour"].string!)!
+                            if h > 12 {
+                                h -= 12
+                            }
+                            else if h == 0 {
+                                h = 12
+                            }
+                            if hours.count < l {
+                                hours.append("\(h) " + (time["ampm"]?.string!)!)
+                                var temp = ""
+                                if countryCode == "US"{
+                                    temp = hour["temp"]["english"].string!
+                                }
+                                else {
+                                    temp = hour["temp"]["metric"].string!
+                                }
+                                let pop = hour["pop"].string!
+                                let img = hour["icon_url"].string!
+                                
+                                temps.append(temp)
+                                pops.append(pop)
+                                imgs.append(img)
+                            }
+                            
+                        }
+                    }
+                    let nc = NotificationCenter.default
+                    nc.post(name:Notification.Name(rawValue:"WEATHERINFO"),object: nil, userInfo: ["hours": hours, "temps": temps, "pops": pops, "imgs": imgs])
+                }
+                
+            }
+        }
+    }
+}
+
+
+
 
 

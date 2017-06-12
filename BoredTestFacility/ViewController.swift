@@ -11,6 +11,8 @@ import SDWebImage
 import iCarousel
 import CoreLocation
 import MapKit
+import MZFormSheetPresentationController
+import MZAppearance
 
 class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, CLLocationManagerDelegate {
     let googlePlacesAPI = GooglePlacesAPI();
@@ -20,6 +22,8 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
     var currentLocation = CLLocation()
     
     var selectedPlace = PlaceInfo()
+    
+    var gotInfo = false
     
     @IBOutlet weak var carousel: iCarousel!
     @IBOutlet weak var resultsAmountLabel: UILabel!
@@ -35,16 +39,53 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
         locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager?.requestAlwaysAuthorization()
         
+        if revealViewController() != nil {
+            revealViewController().rearViewRevealWidth = view.frame.width * 0.85
+            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
+        
+        
         carousel.type = iCarouselType.rotary
         let nc = NotificationCenter.default
         nc.addObserver(forName:Notification.Name(rawValue:"PLACEINFO"), object:nil, queue:nil, using:catchNotification)
+        
+    }
+    
+    @IBAction func menuPressed(_ sender: Any) {
+        if revealViewController() != nil {
+            revealViewController().revealToggle(sender)
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        self.currentLocation = locations[0]
+        self.currentLocation = locations[locations.count - 1]
         //NY LAT:40.752357 LONG:-73.981569
-        googlePlacesAPI.searchNearby(lat: currentLocation.coordinate.latitude,long: currentLocation.coordinate.longitude);
-        googlePlacesAPI.getBestEvents(lat: currentLocation.coordinate.latitude,long: currentLocation.coordinate.longitude);
+        
+        if gotInfo == false{
+            CLGeocoder().reverseGeocodeLocation(currentLocation) { (pmarks, error) in
+                if pmarks?.count != 0 {
+                    if let p = pmarks?[0]{
+                        var countOrState = p.isoCountryCode
+                        let city = p.locality!.replacingOccurrences(of: " ", with: "_")
+                        if p.isoCountryCode == "US"{
+                            countOrState = p.administrativeArea
+                        }
+                        
+                        let defaults = UserDefaults.standard
+                        defaults.set("\(countOrState!)/\(city).json", forKey: "wUrl")
+                        defaults.set(p.isoCountryCode, forKey: "cCode")
+                    }
+                    
+                }
+            }
+            
+            googlePlacesAPI.searchNearby(lat: currentLocation.coordinate.latitude,long: currentLocation.coordinate.longitude);
+            googlePlacesAPI.getBestEvents(lat: currentLocation.coordinate.latitude,long: currentLocation.coordinate.longitude);
+            googlePlacesAPI.getZomatoID(lat: currentLocation.coordinate.latitude, lng: currentLocation.coordinate.longitude);
+            
+            gotInfo = true
+        }
+        
         locationManager?.stopUpdatingLocation()
     }
     
@@ -75,13 +116,13 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
         
         var k = Array(placeDict.keys)
         let pI:PlaceInfo = placeDict[k[index]]!
-        placeView.placeNameLabel.text = pI.name
+        placeView.placeNameLabel.text = pI.name + "."
         let coordinate = CLLocation(latitude: Double(pI.latitude)!, longitude: Double(pI.longitude)!)
         let distanceInMiles = (currentLocation.distance(from: coordinate) / 1609.0)
         placeView.placeDistanceLabel.text = "\(String(format: "%.1f", distanceInMiles)) Mile(s) from you!"
         placeView.placeImageView.sd_setImage(with: URL(string: pI.imageString), placeholderImage: UIImage(named: "placeholder.png"))
         placeView.placeImageView.layer.masksToBounds = true
-        placeView.placeImageView.contentMode = UIViewContentMode.center
+        placeView.placeImageView.contentMode = UIViewContentMode.scaleAspectFit
         
         return itemView
         
@@ -107,6 +148,8 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
         switch type {
         case "movie_theater":
             performSegue(withIdentifier: "movieTheaterDetailVC", sender: carousel);
+        case "restaurant":
+            performSegue(withIdentifier: "restaurantDetailVC", sender: carousel);
         default:
             performSegue(withIdentifier: "detailVC", sender: carousel);
         }
@@ -119,6 +162,9 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
         case "movie_theater":
             let mTDVC = segue.destination as! MovieTheaterDetailViewController
             mTDVC.placeInfo = selectedPlace
+        case "restaurant":
+            let rDVC = segue.destination as! RestaurantDetailViewController
+            rDVC.placeInfo = selectedPlace
         default:
             let dVC = segue.destination as! DetailViewController
             dVC.placeInfo = selectedPlace
@@ -142,10 +188,24 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
             place = PlaceInfo(name: name, place: iD, image: image, placeType: type, lat: lat, long: long)
             placeDict.updateValue(place, forKey: iD)
             carousel.reloadData()
-            resultsAmountLabel.text = "Showing \(placeDict.count) Result(s)"
+            resultsAmountLabel.text = "Showing \(placeDict.count) Result(s)!"
         }
         
     }
+    
+    @IBAction func openFilterMenu(_ sender: Any) {
+        let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "filterNavCon") as! UINavigationController
+        let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
+        formSheetController.presentationController?.contentViewSize = CGSize(width: 365.0, height: 500.0)
+        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideAndBounceFromRight
+        formSheetController.allowDismissByPanningPresentedView = true
+        let presentedViewController = navigationController.viewControllers.first as! FilterMenuViewController
+        presentedViewController.currentLocation = self.currentLocation
+        
+        self.present(formSheetController, animated: true, completion: nil)
+    }
+    
+
 
 }
 

@@ -14,4 +14,10 @@ target 'BoredTestFacility' do
   pod 'SwiftyJSON'
   pod 'SDWebImage', '~>3.8'
   pod 'iCarousel', '~> 1.8'
+  pod 'SwiftyGif', '~> 3.0'
+  pod 'MZFormSheetPresentationController'
+  pod "TextFieldEffects"
+  pod 'Firebase/Core'
+  pod 'Firebase/Database'
+  pod 'Firebase/Auth'
 end

@@ -10,5 +10,7 @@
 #define Bored_Bridging_Header_h
 
 #import "iCarousel.h"
+#import "SWRevealViewController.h"
+#import "SWRevealViewController.m"
 
 #endif /* Bored_Bridging_Header_h */

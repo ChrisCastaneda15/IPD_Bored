@@ -25,7 +25,14 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aDE-Wv-XQQ">
                     <rect key="frame" x="0.0" y="0.0" width="300" height="180"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uwv-FF-r6N">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UIG-dR-Lkd">
+                            <rect key="frame" x="0.0" y="5" width="300" height="169"/>
+                            <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="UIG-dR-Lkd" secondAttribute="height" multiplier="16:9" id="n2b-Tq-KWG"/>
+                            </constraints>
+                        </view>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uwv-FF-r6N">
                             <rect key="frame" x="-1.5" y="5" width="303" height="170"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="uwv-FF-r6N" secondAttribute="height" multiplier="16:9" id="2hq-pn-p11"/>
@@ -34,15 +41,18 @@
                     </subviews>
                     <constraints>
                         <constraint firstItem="uwv-FF-r6N" firstAttribute="centerX" secondItem="aDE-Wv-XQQ" secondAttribute="centerX" id="AmU-MZ-FZY"/>
+                        <constraint firstItem="UIG-dR-Lkd" firstAttribute="leading" secondItem="aDE-Wv-XQQ" secondAttribute="leading" id="axl-TT-gTx"/>
                         <constraint firstItem="uwv-FF-r6N" firstAttribute="centerY" secondItem="aDE-Wv-XQQ" secondAttribute="centerY" id="fVg-wg-Jgr"/>
+                        <constraint firstAttribute="trailing" secondItem="UIG-dR-Lkd" secondAttribute="trailing" id="lxf-kk-SAZ"/>
                         <constraint firstItem="uwv-FF-r6N" firstAttribute="top" secondItem="aDE-Wv-XQQ" secondAttribute="top" constant="5" id="uwd-U7-5rq"/>
+                        <constraint firstItem="UIG-dR-Lkd" firstAttribute="top" secondItem="aDE-Wv-XQQ" secondAttribute="top" constant="5" id="vWX-tf-SIQ"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fRr-dq-rlv">
                     <rect key="frame" x="0.0" y="180" width="300" height="120"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.20000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="3Ey-Jg-21t">
-                            <rect key="frame" x="5" y="5" width="290" height="27"/>
+                            <rect key="frame" x="5" y="5" width="290" height="26.5"/>
                             <fontDescription key="fontDescription" name="coffee+teademo-Regular" family="coffee+tea demo" pointSize="25"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>

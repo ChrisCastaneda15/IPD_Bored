@@ -16,6 +16,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var placeImageView: UIImageView!
     @IBOutlet weak var placeDescTextView: UITextView!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var navBar: UIView!
     
     var placeInfo = PlaceInfo();
     
@@ -26,8 +27,15 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
 
         UIApplication.shared.statusBarStyle = .lightContent
         
-        placeNameLabel.text = placeInfo.name
+        placeNameLabel.text = placeInfo.name + "."
         placeImageView.sd_setImage(with: URL(string: placeInfo.imageString), placeholderImage: UIImage(named: "placeholder.png"))
+        
+        placeDescTextView.text = ""
+        
+        navBar.layer.shadowColor = UIColor.black.cgColor
+        navBar.layer.shadowOpacity = 0.85;
+        navBar.layer.shadowRadius = 10;
+        //navBar.layer.shouldRasterize = true;
         
         let placeLocation = CLLocation(latitude: Double(placeInfo.latitude)!, longitude: Double(placeInfo.longitude)!)
         centerMapOnLocation(location: placeLocation)
@@ -35,6 +43,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
         placesClient.lookUpPlaceID(placeInfo.placeID, callback: { (place, error) -> Void in
             if let error = error {
                 print("lookup place id query error: \(error.localizedDescription)")
+                self.placeDescTextView.text = "Description Unavailable"
                 return
             }
             
@@ -43,11 +52,26 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
                 return
             }
             
-            print("Place name \(place.name)")
-            print("Place address \(place.formattedAddress)")
-            print("Place placeID \(place.placeID)")
-            print("Place attributions \(place.priceLevel)")
+            var desc = "\(place.name) "
+            
+            if place.openNowStatus == .no{
+                desc = desc + "is currently not open now.\n"
+            }
+            else if place.openNowStatus == .unknown {
+                desc = desc + " may or may not be open.\n"
+                if let number = place.phoneNumber {
+                    desc = desc + " Please contact \(number) if you'd like to know more.\n"
+                }
+            }
+            else {
+                desc = desc + "is open now!\n"
+            }
+            
+            desc = desc + "\(place.name) is located at \" \(place.formattedAddress ?? "")\" \n"
+            
+            self.placeDescTextView.text = desc
         })
+        
 
     }
     
