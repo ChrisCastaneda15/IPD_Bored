@@ -19,42 +19,66 @@ public class GooglePlacesAPI{
     ]
     let KEY_WEATHER = "b5d6591a8a63a613"
     
-    func searchNearby(lat: Double, long:Double){
+    func searchNearby(lat: Double, long:Double, filters: [Bool], miles: Double){
         
-        let searchTypes = ["movie_theater": 5, "museum": 5, "bowling_alley": 1, "cafe": 5, "library": 5, "night_club": 5, "shopping_mall": 5, "park": 5]
+        let searchTypes = ["movie_theater": 10, "museum": 10, "bowling_alley": 3, "cafe": 10, "library": 10, "night_club": 5, "shopping_mall": 10, "park": 8]
+        var filteredSearchTypes = searchTypes
+        if filters[0] == false {
+            filteredSearchTypes["park"] = 0
+        }
+        if filters[1] == false {
+            filteredSearchTypes["cafe"] = 0
+        }
+        if filters[2] == false {
+            filteredSearchTypes["bowling_alley"] = 0
+            filteredSearchTypes["night_club"] = 0
+            filteredSearchTypes["shopping_mall"] = 0
+        }
+        if filters[4] == false {
+            filteredSearchTypes["movie_theater"] = 0
+        }
+        if filters[5] == false {
+            filteredSearchTypes["museum"] = 0
+            filteredSearchTypes["library"] = 0
+        }
+        
+        
         let searchUrl_0 = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=";
-        let searchUrl_1 = "&radius=40233.6&key=\(KEY_GOOGLE)"
+        let searchUrl_1 = "&radius=\(miles)&key=\(KEY_GOOGLE)"
         let searchUrl_type = "&type="
         
-        for (type, count) in searchTypes {
-            let searchUrl_final = searchUrl_0 + "\(lat),\(long)" + searchUrl_type + type + searchUrl_1;
+        for (type, count) in filteredSearchTypes {
             
-            Alamofire.request(searchUrl_final).responseJSON { response in
-                if let Json = response.data{
-                    let data = JSON(data: Json);
-                    if let results = data["results"].array {
-                        for num in 0..<count{
-                            var photo = ""
-                            let photos = results[Int(num)]["photos"].array
-                            if let image = photos{
-                                photo = image[0]["photo_reference"].string!
+            if count > 0 {
+                let searchUrl_final = searchUrl_0 + "\(lat),\(long)" + searchUrl_type + type + searchUrl_1;
+                
+                Alamofire.request(searchUrl_final).responseJSON { response in
+                    if let Json = response.data{
+                        let data = JSON(data: Json);
+                        if let results = data["results"].array {
+                            for num in 0..<count{
+                                var photo = ""
+                                let photos = results[Int(num)]["photos"].array
+                                if let image = photos{
+                                    photo = image[0]["photo_reference"].string!
+                                }
+                                let name = results[Int(num)]["name"].string!
+                                let id = results[Int(num)]["place_id"].string!
+                                
+                                photo = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=\(photo)&key=\(self.KEY_GOOGLE)"
+                                
+                                var lat_place = "0.0"
+                                var long_place = "0.0"
+                                
+                                
+                                if let location = results[Int(num)]["geometry"]["location"].dictionary{
+                                    lat_place = location["lat"]!.double!.description
+                                    long_place = location["lng"]!.double!.description
+                                }
+                                
+                                let nc = NotificationCenter.default
+                                nc.post(name:Notification.Name(rawValue:"PLACEINFO"),object: nil, userInfo: ["name":name, "placeID":id, "image":photo, "type":type, "lat":lat_place, "long":long_place])
                             }
-                            let name = results[Int(num)]["name"].string!
-                            let id = results[Int(num)]["place_id"].string!
-                            
-                            photo = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=\(photo)&key=\(self.KEY_GOOGLE)"
-                            
-                            var lat_place = "0.0"
-                            var long_place = "0.0"
-                            
-                            
-                            if let location = results[Int(num)]["geometry"]["location"].dictionary{
-                                lat_place = location["lat"]!.double!.description
-                                long_place = location["lng"]!.double!.description
-                            }
-                            
-                            let nc = NotificationCenter.default
-                            nc.post(name:Notification.Name(rawValue:"PLACEINFO"),object: nil, userInfo: ["name":name, "placeID":id, "image":photo, "type":type, "lat":lat_place, "long":long_place])
                         }
                     }
                 }
@@ -231,7 +255,10 @@ public class GooglePlacesAPI{
                     for res in restaurants{
                         let r = res["restaurant"].dictionary!
                         let name = r["name"]!.string!
-                        let id = r["id"]!.int!
+                        var id = -1
+                        if let iden = r["id"]!.int! {
+                            id = iden
+                        }
                         var lat = ""
                         var lng = ""
                         if let location = r["location"]?.dictionary{
@@ -242,8 +269,11 @@ public class GooglePlacesAPI{
                         if let img = r["thumb"]?.string{
                             image = img
                         }
-                        let nc = NotificationCenter.default
-                        nc.post(name:Notification.Name(rawValue:"PLACEINFO"),object: nil, userInfo: ["name":name, "placeID":id.description, "image":image, "type":"restaurant", "lat":lat, "long":lng])
+                        
+                        if id != -1 {
+                            let nc = NotificationCenter.default
+                            nc.post(name:Notification.Name(rawValue:"PLACEINFO"),object: nil, userInfo: ["name":name, "placeID":id.description, "image":image, "type":"restaurant", "lat":lat, "long":lng])
+                        }
                     }
                 }
             }
@@ -251,7 +281,7 @@ public class GooglePlacesAPI{
     }
     
     func getZomatoInfo(id: String){
-        print(id);
+
         Alamofire.request("https://developers.zomato.com/api/v2.1/restaurant?res_id=\(id)", headers: ZOMATO_HEADER).responseJSON { response in
             if let Json = response.data{
                 let data = JSON(data: Json);

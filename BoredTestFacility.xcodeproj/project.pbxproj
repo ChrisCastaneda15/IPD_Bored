@@ -16,6 +16,8 @@
 		8332225B1EEDB8FB00089A50 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8332225A1EEDB8FB00089A50 /* GoogleService-Info.plist */; };
 		8332225E1EEDCB5900089A50 /* WeatherCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8332225C1EEDCB5800089A50 /* WeatherCollectionViewCell.swift */; };
 		8332225F1EEDCB5900089A50 /* WeatherCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8332225D1EEDCB5800089A50 /* WeatherCollectionViewCell.xib */; };
+		836CA6FE1EF1D3CE00166AAC /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836CA6FD1EF1D3CE00166AAC /* SettingsViewController.swift */; };
+		836CA7001EF1EEE500166AAC /* UserSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836CA6FF1EF1EEE500166AAC /* UserSettingsViewController.swift */; };
 		8377E7861EE75F0A0072A211 /* MovieTheaterDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8377E7851EE75F0A0072A211 /* MovieTheaterDetailViewController.swift */; };
 		8377E78B1EE762F70072A211 /* TheaterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8377E7891EE762F70072A211 /* TheaterTableViewCell.swift */; };
 		8377E78C1EE762F70072A211 /* TheaterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8377E78A1EE762F70072A211 /* TheaterTableViewCell.xib */; };
@@ -48,6 +50,8 @@
 		8332225A1EEDB8FB00089A50 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8332225C1EEDCB5800089A50 /* WeatherCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherCollectionViewCell.swift; sourceTree = "<group>"; };
 		8332225D1EEDCB5800089A50 /* WeatherCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeatherCollectionViewCell.xib; sourceTree = "<group>"; };
+		836CA6FD1EF1D3CE00166AAC /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		836CA6FF1EF1EEE500166AAC /* UserSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettingsViewController.swift; sourceTree = "<group>"; };
 		8377E7851EE75F0A0072A211 /* MovieTheaterDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieTheaterDetailViewController.swift; sourceTree = "<group>"; };
 		8377E7891EE762F70072A211 /* TheaterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheaterTableViewCell.swift; sourceTree = "<group>"; };
 		8377E78A1EE762F70072A211 /* TheaterTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TheaterTableViewCell.xib; sourceTree = "<group>"; };
@@ -193,12 +197,14 @@
 				833222541EECBB6600089A50 /* SideMenuViewController.swift */,
 				83911B7D1EDDDC9700526994 /* ViewController.swift */,
 				83CF236F1EEE18E70041C9A1 /* FilterMenuViewController.swift */,
+				836CA6FD1EF1D3CE00166AAC /* SettingsViewController.swift */,
+				836CA6FF1EF1EEE500166AAC /* UserSettingsViewController.swift */,
 				833222531EECBB5000089A50 /* Detail Screens */,
 				8377E78D1EE762FB0072A211 /* TheaterCell */,
 				833222601EEDCB6100089A50 /* WeatherCell */,
+				837880C91EE4B4DA0021A47A /* CarouselView */,
 				8377E7881EE75F3C0072A211 /* Custom Classes */,
 				83911B851EDDDC9700526994 /* Assets.xcassets */,
-				837880C91EE4B4DA0021A47A /* CarouselView */,
 				83911B871EDDDC9700526994 /* LaunchScreen.storyboard */,
 				83911B8A1EDDDC9700526994 /* Info.plist */,
 				83911B821EDDDC9700526994 /* BoredTestFacility.xcdatamodeld */,
@@ -355,6 +361,7 @@
 				833222551EECBB6600089A50 /* SideMenuViewController.swift in Sources */,
 				837880C61EE4B3F60021A47A /* PlaceCarouselView.swift in Sources */,
 				833222521EEC926100089A50 /* iCarousel.m in Sources */,
+				836CA7001EF1EEE500166AAC /* UserSettingsViewController.swift in Sources */,
 				83F9F78D1EDDF40C00E2FF6E /* Classes.swift in Sources */,
 				837C98DA1EEB281700CE04C1 /* RestaurantDetailViewController.swift in Sources */,
 				83911B7C1EDDDC9700526994 /* AppDelegate.swift in Sources */,
@@ -363,6 +370,7 @@
 				837880CB1EE4D8B30021A47A /* DetailViewController.swift in Sources */,
 				833222571EEDAB8F00089A50 /* LoginSignupViewController.swift in Sources */,
 				8332224F1EEC91DC00089A50 /* SWRevealViewController.m in Sources */,
+				836CA6FE1EF1D3CE00166AAC /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +440,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = Bored.;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "Bored-Bridging-Header.h";
@@ -476,6 +485,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = Bored.;
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "Bored-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

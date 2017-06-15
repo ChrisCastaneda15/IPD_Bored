@@ -16,6 +16,7 @@ class LoginSignupViewController: UIViewController {
     
     @IBOutlet weak var gifImageView: UIImageView!
 
+    @IBOutlet weak var logLabel: UILabel!
     @IBOutlet weak var emailTextField: KaedeTextField!
     @IBOutlet weak var passwordTextField: KaedeTextField!
     @IBOutlet weak var usernameTextField: KaedeTextField!
@@ -153,12 +154,14 @@ class LoginSignupViewController: UIViewController {
             usernameTextField.isHidden = true
             logInButton.setTitle("Log In!", for: UIControlState.normal)
             logSwitchButton.setTitle("Don't have an account? Sign up!", for: UIControlState.normal)
+            logLabel.text = "Log In."
             logType = false;
         }
         else {
             usernameTextField.isHidden = false
             logInButton.setTitle("Sign Up!", for: UIControlState.normal)
             logSwitchButton.setTitle("Have an account? Log in!", for: UIControlState.normal)
+            logLabel.text = "Sign Up."
             logType = true;
         }
     }

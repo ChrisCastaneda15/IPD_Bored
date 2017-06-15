@@ -25,6 +25,9 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
     
     var gotInfo = false
     
+    var filters = [Bool]()
+    var miles = 25.0
+    
     @IBOutlet weak var carousel: iCarousel!
     @IBOutlet weak var resultsAmountLabel: UILabel!
     
@@ -39,6 +42,8 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
         locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager?.requestAlwaysAuthorization()
         
+        filters = [true, true, true, true, true, true]
+        
         if revealViewController() != nil {
             revealViewController().rearViewRevealWidth = view.frame.width * 0.85
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
@@ -48,6 +53,33 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
         carousel.type = iCarouselType.rotary
         let nc = NotificationCenter.default
         nc.addObserver(forName:Notification.Name(rawValue:"PLACEINFO"), object:nil, queue:nil, using:catchNotification)
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        carousel.isScrollEnabled = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        carousel.isScrollEnabled = false
+    }
+    
+    func getInfo(){
+        gotInfo = false
+        placeDict = [String:PlaceInfo]();
+        resultsAmountLabel.text = "Getting Result(s)!"
+        carousel.reloadData()
+        locationManager?.startUpdatingLocation()
+    }
+    
+    @IBAction func unwindToContainerVC(segue: UIStoryboardSegue) {
+        if segue.source is FilterMenuViewController {
+            if let source = segue.source as? FilterMenuViewController {
+                filters = source.toggled
+                miles = Double(Int(source.mileSlider.value))
+                getInfo()
+            }
+        }
         
     }
     
@@ -79,9 +111,16 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
                 }
             }
             
-            googlePlacesAPI.searchNearby(lat: currentLocation.coordinate.latitude,long: currentLocation.coordinate.longitude);
-            googlePlacesAPI.getBestEvents(lat: currentLocation.coordinate.latitude,long: currentLocation.coordinate.longitude);
-            googlePlacesAPI.getZomatoID(lat: currentLocation.coordinate.latitude, lng: currentLocation.coordinate.longitude);
+
+            googlePlacesAPI.searchNearby(lat: currentLocation.coordinate.latitude,long: currentLocation.coordinate.longitude, filters: filters, miles: (miles * 1609.34));
+            
+            if filters[1] == true {
+                googlePlacesAPI.getZomatoID(lat: currentLocation.coordinate.latitude, lng: currentLocation.coordinate.longitude);
+            }
+            
+            if filters[3] == true {
+                googlePlacesAPI.getBestEvents(lat: currentLocation.coordinate.latitude,long: currentLocation.coordinate.longitude);
+            }
             
             gotInfo = true
         }
@@ -186,9 +225,12 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
                 return
             }
             place = PlaceInfo(name: name, place: iD, image: image, placeType: type, lat: lat, long: long)
-            placeDict.updateValue(place, forKey: iD)
-            carousel.reloadData()
-            resultsAmountLabel.text = "Showing \(placeDict.count) Result(s)!"
+            let coordinate = CLLocation(latitude: Double(place.latitude)!, longitude: Double(place.longitude)!)
+            if (currentLocation.distance(from: coordinate) / 1609.0) < miles {
+                placeDict.updateValue(place, forKey: iD)
+                carousel.reloadData()
+                resultsAmountLabel.text = "Showing \(placeDict.count) Result(s)!"
+            }
         }
         
     }
@@ -201,6 +243,8 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
         formSheetController.allowDismissByPanningPresentedView = true
         let presentedViewController = navigationController.viewControllers.first as! FilterMenuViewController
         presentedViewController.currentLocation = self.currentLocation
+        presentedViewController.origToggled = filters
+        presentedViewController.origMiles = miles
         
         self.present(formSheetController, animated: true, completion: nil)
     }

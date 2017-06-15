@@ -13,30 +13,40 @@ class FilterMenuViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet var filterButtons: [UIButton]!
     @IBOutlet var filterLabels: [UILabel]!
+
+    @IBOutlet weak var sButton: UIButton!
+    
     
     @IBOutlet weak var searchLabel: UILabel!
     @IBOutlet weak var mileSlider: UISlider!
     
     @IBOutlet weak var mapView: MKMapView!
     
+    var origToggled = [Bool]()
+    var origMiles = 0.0
     var toggled = [Bool]()
     var currentLocation = CLLocation()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        sButton.isEnabled = false
+        toggled = origToggled
         
-        toggled = [true, true, true, true, true, true]
+        centerMapOnLocation(radius: Int(origMiles))
         
-        centerMapOnLocation(radius: 5)
+        mileSlider.value = Float(origMiles)
+        searchLabel.text = "Search Radius - \(Int(mileSlider.value))m"
         
         for t in 0..<toggled.count {
             filterButtons[t].layer.borderColor = UIColor.BoredColors.OffWhite.cgColor
             if toggled[t] == true {
                 filterButtons[t].layer.borderWidth = 2.0
+                filterLabels[t].textColor = UIColor.BoredColors.OffWhite
                 
             }
             else {
                 filterButtons[t].layer.borderWidth = 0.0
+                filterLabels[t].textColor = UIColor.BoredColors.DeepBlue
             }
         }
 
@@ -55,6 +65,8 @@ class FilterMenuViewController: UIViewController, MKMapViewDelegate {
     @IBAction func sliderMoved(_ sender: UISlider) {
         searchLabel.text = "Search Radius - \(Int(sender.value))m"
         centerMapOnLocation(radius: Int(sender.value))
+        
+        enableDisableButton()
     }
     
     
@@ -72,10 +84,44 @@ class FilterMenuViewController: UIViewController, MKMapViewDelegate {
             filterButtons[sender.tag].layer.borderColor = UIColor.BoredColors.OffWhite.cgColor
         }
         
+        enableDisableButton()
     }
     
     @IBAction func submitButton(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        let anyDiff = checkChange()
+        
+        if anyDiff == true {
+            let defaults = UserDefaults.standard
+            defaults.set(toggled, forKey: "toggledFilters")
+            //self.dismiss(animated: true, completion: nil)
+        }
+        else {
+            //Alert
+        }
+    }
+    
+    func enableDisableButton(){
+        let c = checkChange()
+        
+        if c == true || origMiles != Double(Int(mileSlider.value)) {
+            sButton.isEnabled = true
+        }
+        else {
+            sButton.isEnabled = false
+        }
+    }
+    
+    func checkChange()-> Bool{
+        var anyDiff = false
+        
+        for i in 0..<toggled.count {
+            if origToggled[i] != toggled[i]{
+                anyDiff = true
+                break
+            }
+        }
+        
+        return anyDiff
     }
     
     @IBAction func closeButton(_ sender: Any) {

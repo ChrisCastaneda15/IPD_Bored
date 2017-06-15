@@ -51,8 +51,11 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fRr-dq-rlv">
                     <rect key="frame" x="0.0" y="180" width="300" height="120"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.20000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="3Ey-Jg-21t">
-                            <rect key="frame" x="5" y="5" width="290" height="26.5"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.20000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="3Ey-Jg-21t">
+                            <rect key="frame" x="5" y="5" width="290" height="45"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="45" id="ccf-5A-27O"/>
+                            </constraints>
                             <fontDescription key="fontDescription" name="coffee+teademo-Regular" family="coffee+tea demo" pointSize="25"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>

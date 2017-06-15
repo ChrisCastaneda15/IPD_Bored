@@ -98,6 +98,32 @@ class SideMenuViewController: UIViewController, UICollectionViewDelegate, UIColl
 //            googlePlacesAPI.getWeather(wUrl_2: wUrl!, countryCode: cCode!)
 //        }
     }
+    
+    @IBAction func sideMenuButtons(_ sender: UIButton) {
+        switch sender.tag {
+        case 0:
+            print("goToHome")
+            if revealViewController().frontViewController.childViewControllers[0] is ViewController {
+                revealViewController().revealToggle(animated: true)
+            }
+            else {
+                performSegue(withIdentifier: "goHome", sender: sender)
+            }
+            
+        case 2:
+            print("goToSettings")
+            if revealViewController().frontViewController.childViewControllers[0] is SettingsViewController {
+                revealViewController().revealToggle(animated: true)
+            }
+            else {
+                performSegue(withIdentifier: "goSettings", sender: sender)
+            }
+            
+        default:
+            print("XxXXXXXX\n\(revealViewController().frontViewController.childViewControllers[0].description)XxXXXXXX\n")
+        }
+    }
+    
 
     public func catchNotification(notification:Notification) -> Void {
         if notification.name.rawValue == "WEATHERINFO" {
