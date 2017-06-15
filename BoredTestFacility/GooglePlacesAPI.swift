@@ -256,7 +256,7 @@ public class GooglePlacesAPI{
                         let r = res["restaurant"].dictionary!
                         let name = r["name"]!.string!
                         var id = -1
-                        if let iden = r["id"]!.int! {
+                        if let iden = r["id"]!.int {
                             id = iden
                         }
                         var lat = ""
