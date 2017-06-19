@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import MZFormSheetPresentationController
+import MZAppearance
 
 class SettingsViewController: UIViewController {
 
@@ -31,6 +33,14 @@ class SettingsViewController: UIViewController {
     }
 
     @IBAction func settingsButtonPressed(_ sender: UIButton) {
+        if sender.tag == 0 {
+            let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "userSetCon") as! UINavigationController
+            let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
+            formSheetController.presentationController?.contentViewSize = CGSize(width: 365.0, height: 425.0)
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideAndBounceFromTop
+            formSheetController.allowDismissByPanningPresentedView = true
+            self.present(formSheetController, animated: true, completion: nil)
+        }
     }
     
 

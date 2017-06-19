@@ -38,18 +38,10 @@ class SideMenuViewController: UIViewController, UICollectionViewDelegate, UIColl
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        firebaseDB = FIRDatabase.database().reference().child("users");
+        
         userImageView.layer.cornerRadius = userImageView.frame.size.width / 2
     
-        FIRAuth.auth()?.addStateDidChangeListener { auth, user in
-            if let currentUser = user {
-                self.myUser = currentUser
-                self.helloUserNameLabel.text = "Hello, \(currentUser.displayName ?? "User")!"
-            }
-            else {
-                self.dismiss(animated: true, completion: nil)
-            }
-        }
-        
         collectionView.isHidden = true
         
         collectionView.register(UINib(nibName: "WeatherCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cellReuse")
@@ -66,6 +58,28 @@ class SideMenuViewController: UIViewController, UICollectionViewDelegate, UIColl
     override func viewWillAppear(_ animated: Bool) {
         let wUrl = defaults.string(forKey: "wUrl")
         let cCode = defaults.string(forKey: "cCode")
+        
+        FIRAuth.auth()?.addStateDidChangeListener { auth, user in
+            if let currentUser = user {
+                self.myUser = currentUser
+                self.helloUserNameLabel.text = "Hello, \(currentUser.displayName ?? "User")!"
+            }
+            else {
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
+        
+        let connectedRef = FIRDatabase.database().reference(withPath: ".info/connected")
+        connectedRef.observe(.value, with: { snapshot in
+            if let connected = snapshot.value as? Bool, connected {
+                print("Connected")
+                self.connected = true;
+                self.observeDB()
+            } else {
+                print("Not connected")
+                self.connected = false;
+            }
+        })
         
         googlePlacesAPI.getWeather(wUrl_2: wUrl!, countryCode: cCode!)
         
@@ -97,6 +111,24 @@ class SideMenuViewController: UIViewController, UICollectionViewDelegate, UIColl
 //        else {
 //            googlePlacesAPI.getWeather(wUrl_2: wUrl!, countryCode: cCode!)
 //        }
+    }
+    
+    func observeDB(){
+        let userDB = firebaseDB.child(myUser.uid)
+        userDB.observe(.value, with: { (snapshot) in
+            let postDict = snapshot.value as? [String : AnyObject] ?? [:]
+            if postDict.count > 0 {
+                if postDict["profilePic"] != nil {
+                    print("Found it");
+                    let urlString = postDict["profilePic"]!
+                    self.userImageView.sd_setImage(with: URL(string: urlString as! String), placeholderImage: UIImage(named: "placeholder.png"))
+                }
+                else {
+                    print("Set One");
+                }
+            }
+            
+        })
     }
     
     @IBAction func sideMenuButtons(_ sender: UIButton) {
