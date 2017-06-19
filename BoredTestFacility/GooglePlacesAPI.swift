@@ -255,8 +255,9 @@ public class GooglePlacesAPI{
                     for res in restaurants{
                         let r = res["restaurant"].dictionary!
                         let name = r["name"]!.string!
-                        var id = "-1"
-                        if let iden = r["id"]!.string {
+                        var id = -1
+
+                        if let iden = r["id"]!.int {
                             id = iden
                         }
                         var lat = ""
@@ -270,7 +271,7 @@ public class GooglePlacesAPI{
                             image = img
                         }
                         
-                        if id != "-1" {
+                        if id != -1 {
                             let nc = NotificationCenter.default
                             nc.post(name:Notification.Name(rawValue:"PLACEINFO"),object: nil, userInfo: ["name":name, "placeID":id.description, "image":image, "type":"restaurant", "lat":lat, "long":lng])
                         }

@@ -47,7 +47,7 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bored." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rZp-QZ-Q9m">
-                                        <rect key="frame" x="159.5" y="7" width="57" height="31.5"/>
+                                        <rect key="frame" x="160" y="6.5" width="57" height="31.5"/>
                                         <fontDescription key="fontDescription" name="coffee+teademo-Regular" family="coffee+tea demo" pointSize="30"/>
                                         <color key="textColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -153,7 +153,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="365" height="45"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filter Options." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tto-c2-L9b">
-                                        <rect key="frame" x="116.5" y="7" width="132" height="31.5"/>
+                                        <rect key="frame" x="117" y="7.5" width="132" height="31.5"/>
                                         <fontDescription key="fontDescription" name="coffee+teademo-Regular" family="coffee+tea demo" pointSize="30"/>
                                         <color key="textColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -703,7 +703,7 @@
                                     <constraint firstAttribute="height" constant="1" id="1Se-1c-3SK"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Is-Ef-6gx">
+                            <view tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Is-Ef-6gx">
                                 <rect key="frame" x="0.0" y="206" width="375" height="55"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete Account" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PKp-0K-Ibk">
@@ -712,11 +712,21 @@
                                         <color key="textColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JVP-SV-QXa">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
+                                        <connections>
+                                            <action selector="settingsButtonPressed:" destination="hEW-uq-Agi" eventType="touchUpInside" id="VAU-Mv-ZRW"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.25882352939999997" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="PKp-0K-Ibk" firstAttribute="centerY" secondItem="6Is-Ef-6gx" secondAttribute="centerY" id="KNj-CQ-v02"/>
+                                    <constraint firstItem="JVP-SV-QXa" firstAttribute="top" secondItem="6Is-Ef-6gx" secondAttribute="top" id="M92-fR-iBw"/>
+                                    <constraint firstItem="JVP-SV-QXa" firstAttribute="leading" secondItem="6Is-Ef-6gx" secondAttribute="leading" id="MbH-eG-Max"/>
                                     <constraint firstAttribute="height" constant="55" id="ZVR-34-bVE"/>
+                                    <constraint firstAttribute="bottom" secondItem="JVP-SV-QXa" secondAttribute="bottom" id="iu0-YQ-fyG"/>
+                                    <constraint firstAttribute="trailing" secondItem="JVP-SV-QXa" secondAttribute="trailing" id="kc8-Rr-LZS"/>
                                     <constraint firstItem="PKp-0K-Ibk" firstAttribute="leading" secondItem="6Is-Ef-6gx" secondAttribute="leading" constant="50" id="qs0-Hd-reJ"/>
                                 </constraints>
                             </view>
@@ -731,7 +741,7 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zpi-rc-16r">
-                                        <rect key="frame" x="148" y="7" width="79.5" height="31.5"/>
+                                        <rect key="frame" x="148" y="6.5" width="79.5" height="31.5"/>
                                         <fontDescription key="fontDescription" name="coffee+teademo-Regular" family="coffee+tea demo" pointSize="30"/>
                                         <color key="textColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1053,7 +1063,7 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Home" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hPj-8I-Yyg">
-                                            <rect key="frame" x="73" y="10" width="246" height="31.5"/>
+                                            <rect key="frame" x="73" y="9.5" width="246" height="31.5"/>
                                             <fontDescription key="fontDescription" name="coffee+teademo-Regular" family="coffee+tea demo" pointSize="30"/>
                                             <color key="textColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -1096,7 +1106,7 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favorites" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x3A-6f-Sl0">
-                                            <rect key="frame" x="73" y="10" width="246" height="31.5"/>
+                                            <rect key="frame" x="73" y="9.5" width="246" height="31.5"/>
                                             <fontDescription key="fontDescription" name="coffee+teademo-Regular" family="coffee+tea demo" pointSize="30"/>
                                             <color key="textColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -1139,7 +1149,7 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Alh-Yd-uYy">
-                                            <rect key="frame" x="73" y="10" width="246" height="31.5"/>
+                                            <rect key="frame" x="73" y="9.5" width="246" height="31.5"/>
                                             <fontDescription key="fontDescription" name="coffee+teademo-Regular" family="coffee+tea demo" pointSize="30"/>
                                             <color key="textColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -1263,10 +1273,10 @@
             </objects>
             <point key="canvasLocation" x="33" y="-716"/>
         </scene>
-        <!--Login Signup View Controller-->
+        <!--loginVC-->
         <scene sceneID="7iu-qA-iH5">
             <objects>
-                <viewController id="lYi-XZ-7bb" customClass="LoginSignupViewController" customModule="BoredTestFacility" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="loginVC" title="loginVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="lYi-XZ-7bb" customClass="LoginSignupViewController" customModule="BoredTestFacility" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nsU-xi-TUE"/>
                         <viewControllerLayoutGuide type="bottom" id="F8T-gD-yoB"/>
@@ -1658,7 +1668,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QbY-Hf-i4N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="631" y="1229"/>
+            <point key="canvasLocation" x="2700" y="1096"/>
         </scene>
         <!--Movie Theater Detail View Controller-->
         <scene sceneID="z0f-e7-3Pc">
@@ -1691,7 +1701,7 @@
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today's Showtimes." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PsU-j6-lWr">
-                                                            <rect key="frame" x="119.5" y="4.5" width="120" height="21"/>
+                                                            <rect key="frame" x="120" y="5" width="120" height="21"/>
                                                             <fontDescription key="fontDescription" name="coffee+teademo-Regular" family="coffee+tea demo" pointSize="20"/>
                                                             <color key="textColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -1935,7 +1945,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DJA-71-16A" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-15" y="1344"/>
+            <point key="canvasLocation" x="2057" y="1212"/>
         </scene>
         <!--Restaurant Detail View Controller-->
         <scene sceneID="xhP-7k-86Q">
@@ -2382,7 +2392,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uJh-eE-TS8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1268" y="1229"/>
+            <point key="canvasLocation" x="3340" y="1096"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="iPi-xx-OV3">

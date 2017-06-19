@@ -40,6 +40,10 @@ class SideMenuViewController: UIViewController, UICollectionViewDelegate, UIColl
         
         firebaseDB = FIRDatabase.database().reference().child("users");
         
+        userImageView.layer.shadowColor = UIColor.BoredColors.OffWhite.cgColor
+        userImageView.layer.shadowOpacity = 0.85;
+        userImageView.layer.shadowRadius = 100
+        
         userImageView.layer.cornerRadius = userImageView.frame.size.width / 2
     
         collectionView.isHidden = true
@@ -50,6 +54,8 @@ class SideMenuViewController: UIViewController, UICollectionViewDelegate, UIColl
         currentHourLabel.text = ""
         currentTempLabel.text = ""
         currentPOPLabel.text = ""
+        
+        
         
         let nc = NotificationCenter.default
         nc.addObserver(forName:Notification.Name(rawValue:"WEATHERINFO"), object:nil, queue:nil, using:catchNotification)

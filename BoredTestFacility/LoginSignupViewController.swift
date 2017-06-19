@@ -12,7 +12,7 @@ import FirebaseDatabase
 import TextFieldEffects
 import SwiftyGif
 
-class LoginSignupViewController: UIViewController {
+class LoginSignupViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var gifImageView: UIImageView!
 
@@ -71,17 +71,53 @@ class LoginSignupViewController: UIViewController {
         emailTextField.placeholderColor = UIColor.gray
         emailTextField.keyboardAppearance = .dark
         emailTextField.keyboardType = .emailAddress
+        emailTextField.returnKeyType = .next
+        emailTextField.delegate = self
         passwordTextField.placeholder = "Password"
         passwordTextField.textColor = UIColor.white
         passwordTextField.font = passwordTextField.font?.withSize(15)
         passwordTextField.placeholderColor = UIColor.gray
         passwordTextField.isSecureTextEntry = true
         passwordTextField.keyboardAppearance = .dark
+        passwordTextField.delegate = self
+        if usernameTextField.isHidden == true{
+            passwordTextField.returnKeyType = .go
+        }
+        else {
+            passwordTextField.returnKeyType = .next
+        }
+        
         usernameTextField.placeholder = "Username"
         usernameTextField.textColor = UIColor.white
         usernameTextField.font = usernameTextField.font?.withSize(15)
         usernameTextField.placeholderColor = UIColor.gray
         usernameTextField.keyboardAppearance = .dark
+        usernameTextField.delegate = self
+        usernameTextField.returnKeyType = .go
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if textField == emailTextField {
+            passwordTextField.becomeFirstResponder()
+        }
+        else if textField == passwordTextField {
+            if usernameTextField.isHidden == true {
+                passwordTextField.resignFirstResponder()
+                logInSignUp(sender: textField)
+            }
+            else {
+                usernameTextField.becomeFirstResponder()
+            }
+            
+        }
+        else if textField == usernameTextField {
+            usernameTextField.resignFirstResponder()
+            logInSignUp(sender: textField)
+            
+        }
+        
+        return true
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -94,7 +130,7 @@ class LoginSignupViewController: UIViewController {
         
     }
     
-    func createUser(email: String, password: String, sender: UIButton) {
+    func createUser(email: String, password: String) {
         FIRAuth.auth()?.createUser(withEmail: email, password: password) { (user, error) in
             // Set Display Name
             let changeRequest = user?.profileChangeRequest()
@@ -106,28 +142,33 @@ class LoginSignupViewController: UIViewController {
                     self.userName = self.usernameTextField.text!;
                     print(self.userName);
                     //Go to Main Screen
-                    self.performSegue(withIdentifier: "toMain", sender: sender)
+                    self.performSegue(withIdentifier: "toMain", sender: nil)
                 }
             }
         }
     }
     
-    func loginUser(email: String, password: String, sender: UIButton) {
+    func loginUser(email: String, password: String) {
         FIRAuth.auth()?.signIn(withEmail: email, password: password) { (user, error) in
             //Go to Main Screen
             print(user?.displayName ?? "EMPTY");
-            self.performSegue(withIdentifier: "toMain", sender: sender)
+            self.performSegue(withIdentifier: "toMain", sender: nil)
         }
     }
     
     @IBAction func logPressed(_ sender: UIButton) {
+        logInSignUp(sender: sender)
+        
+    }
+    
+    func logInSignUp(sender: Any){
         if connected {
             if !emailTextField.text!.isEmpty && !passwordTextField.text!.isEmpty {
                 if logType {
-                    createUser(email: emailTextField.text!, password: passwordTextField.text!, sender: sender);
+                    createUser(email: emailTextField.text!, password: passwordTextField.text!);
                 }
                 else {
-                    loginUser(email: emailTextField.text!, password: passwordTextField.text!, sender: sender);
+                    loginUser(email: emailTextField.text!, password: passwordTextField.text!);
                 }
             }
             else {
@@ -146,12 +187,12 @@ class LoginSignupViewController: UIViewController {
             alertController.addAction(okAction)
             self.present(alertController, animated: true, completion: nil)
         }
-        
     }
     
     @IBAction func switchPressed(_ sender: UIButton) {
         if logType {
             usernameTextField.isHidden = true
+            passwordTextField.returnKeyType = .go
             logInButton.setTitle("Log In!", for: UIControlState.normal)
             logSwitchButton.setTitle("Don't have an account? Sign up!", for: UIControlState.normal)
             logLabel.text = "Log In."
@@ -159,6 +200,7 @@ class LoginSignupViewController: UIViewController {
         }
         else {
             usernameTextField.isHidden = false
+            passwordTextField.returnKeyType = .next
             logInButton.setTitle("Sign Up!", for: UIControlState.normal)
             logSwitchButton.setTitle("Have an account? Log in!", for: UIControlState.normal)
             logLabel.text = "Sign Up."
