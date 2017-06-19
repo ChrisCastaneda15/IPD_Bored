@@ -112,15 +112,15 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
             }
             
 
-//            googlePlacesAPI.searchNearby(lat: currentLocation.coordinate.latitude,long: currentLocation.coordinate.longitude, filters: filters, miles: (miles * 1609.34));
-//            
-//            if filters[1] == true {
-//                googlePlacesAPI.getZomatoID(lat: currentLocation.coordinate.latitude, lng:currentLocation.coordinate.longitude);
-//            }
-//            
-//            if filters[3] == true {
-//                googlePlacesAPI.getBestEvents(lat: currentLocation.coordinate.latitude,long: currentLocation.coordinate.longitude);
-//            }
+            googlePlacesAPI.searchNearby(lat: currentLocation.coordinate.latitude,long: currentLocation.coordinate.longitude, filters: filters, miles: (miles * 1609.34));
+            
+            if filters[1] == true {
+                googlePlacesAPI.getZomatoID(lat: currentLocation.coordinate.latitude, lng:currentLocation.coordinate.longitude);
+            }
+            
+            if filters[3] == true {
+                googlePlacesAPI.getBestEvents(lat: currentLocation.coordinate.latitude,long: currentLocation.coordinate.longitude);
+            }
             
             gotInfo = true
         }
