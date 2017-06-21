@@ -384,6 +384,61 @@ public class GooglePlacesAPI{
             }
         }
     }
+    
+    func getEventDetail(id: String){
+        let ticketMasterUrl = "https://app.ticketmaster.com/discovery/v2/events/\(id).json?apikey=\(KEY_TICKETMASTER)"
+        Alamofire.request(ticketMasterUrl).responseJSON { response in
+            if let Json = response.data{
+                let data = JSON(data: Json);
+                
+                let url = data["url"].string!
+                
+                var info = "Info not Available"
+                
+                if let i = data["info"].string {
+                    info = i
+                }
+                
+                var genre = "N/A"
+                var priceMin = 0.0
+                var priceMax = 0.0
+                var saleDate = ""
+                var venueImg = ""
+                var venueName = ""
+                
+                if let classifications = data["classifications"].array {
+                    let c = classifications[0].dictionary!
+                    genre = c["genre"]!["name"].string!
+                }
+                
+                if let sales = data["sales"].dictionary {
+                    let p = sales["public"]!.dictionary!
+                    saleDate = p["startDateTime"]!.string!
+                }
+                
+                if let priceRanges = data["priceRanges"].array {
+                    let r = priceRanges[0].dictionary!
+                    priceMin = r["min"]!.double!
+                    priceMax = r["max"]!.double!
+                }
+                
+                if let embedded = data["_embedded"].dictionary{
+                    if let venues = embedded["venues"]?.array{
+                        venueName = venues[0]["name"].string!
+                        let im = venues[0]["images"].array!
+                        venueImg = im[0]["url"].string!
+                    }
+                }
+                
+                
+                
+                let nc = NotificationCenter.default
+                nc.post(name:Notification.Name(rawValue:"EVENTINFO"),object: nil, userInfo: ["url": url, "info": info, "genre": genre, "min": priceMin, "max": priceMax, "saleDate": saleDate, "venueImg": venueImg, "name": venueName])
+                
+            }
+        }
+    }
+    
 }
 
 

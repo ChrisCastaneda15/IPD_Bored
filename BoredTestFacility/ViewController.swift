@@ -189,6 +189,8 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
             performSegue(withIdentifier: "movieTheaterDetailVC", sender: carousel);
         case "restaurant":
             performSegue(withIdentifier: "restaurantDetailVC", sender: carousel);
+        case "event":
+            performSegue(withIdentifier: "eventDetailVC", sender: carousel);
         default:
             performSegue(withIdentifier: "detailVC", sender: carousel);
         }
@@ -196,7 +198,6 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         switch selectedPlace.placeType {
         case "movie_theater":
             let mTDVC = segue.destination as! MovieTheaterDetailViewController
@@ -204,6 +205,9 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
         case "restaurant":
             let rDVC = segue.destination as! RestaurantDetailViewController
             rDVC.placeInfo = selectedPlace
+        case "event":
+            let eDVC = segue.destination as! EventDetailViewController
+            eDVC.placeInfo = selectedPlace
         default:
             let dVC = segue.destination as! DetailViewController
             dVC.placeInfo = selectedPlace

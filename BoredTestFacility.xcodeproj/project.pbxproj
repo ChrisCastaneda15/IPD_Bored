@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		545C6B134F775159EF70AA2D /* Pods_BoredTestFacility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7BA80EE2E5064D9F0329952 /* Pods_BoredTestFacility.framework */; };
+		8328E3151EF9A79C001E41BF /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8328E3141EF9A79C001E41BF /* EventDetailViewController.swift */; };
 		8332224F1EEC91DC00089A50 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8332224E1EEC91DC00089A50 /* SWRevealViewController.m */; };
 		833222521EEC926100089A50 /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 833222511EEC926100089A50 /* iCarousel.m */; };
 		833222551EECBB6600089A50 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833222541EECBB6600089A50 /* SideMenuViewController.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8328E3141EF9A79C001E41BF /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 		8332224C1EEC91DB00089A50 /* BoredTestFacility-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BoredTestFacility-Bridging-Header.h"; sourceTree = "<group>"; };
 		8332224D1EEC91DC00089A50 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		8332224E1EEC91DC00089A50 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 		833222531EECBB5000089A50 /* Detail Screens */ = {
 			isa = PBXGroup;
 			children = (
+				8328E3141EF9A79C001E41BF /* EventDetailViewController.swift */,
 				837880CA1EE4D8B30021A47A /* DetailViewController.swift */,
 				837C98D91EEB281700CE04C1 /* RestaurantDetailViewController.swift */,
 				8377E7851EE75F0A0072A211 /* MovieTheaterDetailViewController.swift */,
@@ -358,6 +361,7 @@
 				83911B841EDDDC9700526994 /* BoredTestFacility.xcdatamodeld in Sources */,
 				8377E7861EE75F0A0072A211 /* MovieTheaterDetailViewController.swift in Sources */,
 				8377E78B1EE762F70072A211 /* TheaterTableViewCell.swift in Sources */,
+				8328E3151EF9A79C001E41BF /* EventDetailViewController.swift in Sources */,
 				833222551EECBB6600089A50 /* SideMenuViewController.swift in Sources */,
 				837880C61EE4B3F60021A47A /* PlaceCarouselView.swift in Sources */,
 				833222521EEC926100089A50 /* iCarousel.m in Sources */,
