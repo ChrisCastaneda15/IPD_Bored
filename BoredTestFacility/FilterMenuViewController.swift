@@ -13,6 +13,8 @@ class FilterMenuViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet var filterButtons: [UIButton]!
     @IBOutlet var filterLabels: [UILabel]!
+    @IBOutlet var filterImages: [UIImageView]!
+    
 
     @IBOutlet weak var sButton: UIButton!
     
@@ -42,16 +44,16 @@ class FilterMenuViewController: UIViewController, MKMapViewDelegate {
             if toggled[t] == true {
                 filterButtons[t].layer.borderWidth = 2.0
                 filterLabels[t].textColor = UIColor.BoredColors.OffWhite
-                
+                filterImages[t].tintColor = UIColor.BoredColors.OffWhite
             }
             else {
                 filterButtons[t].layer.borderWidth = 0.0
                 filterLabels[t].textColor = UIColor.BoredColors.DeepBlue
+                filterImages[t].tintColor = UIColor.BoredColors.DeepBlue
             }
         }
-
     }
-
+    
     func centerMapOnLocation(radius: Int) {
         let regionRadius: CLLocationDistance = Double(radius) * 100.0
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(currentLocation.coordinate, regionRadius * 2.0, regionRadius * 2.0)
@@ -73,12 +75,14 @@ class FilterMenuViewController: UIViewController, MKMapViewDelegate {
     @IBAction func filterButtonPressed(_ sender: UIButton) {
         if toggled[sender.tag] == true {
             filterLabels[sender.tag].textColor = UIColor.BoredColors.DeepBlue
+            filterImages[sender.tag].tintColor = UIColor.BoredColors.DeepBlue
             toggled[sender.tag] = false
             filterButtons[sender.tag].layer.borderWidth = 0.0
             
         }
         else {
             filterLabels[sender.tag].textColor = UIColor.BoredColors.OffWhite
+            filterImages[sender.tag].tintColor = UIColor.BoredColors.OffWhite
             toggled[sender.tag] = true
             filterButtons[sender.tag].layer.borderWidth = 2.0
             filterButtons[sender.tag].layer.borderColor = UIColor.BoredColors.OffWhite.cgColor

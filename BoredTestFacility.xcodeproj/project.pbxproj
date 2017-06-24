@@ -23,6 +23,7 @@
 		8332225F1EEDCB5900089A50 /* WeatherCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8332225D1EEDCB5800089A50 /* WeatherCollectionViewCell.xib */; };
 		836CA6FE1EF1D3CE00166AAC /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836CA6FD1EF1D3CE00166AAC /* SettingsViewController.swift */; };
 		836CA7001EF1EEE500166AAC /* UserSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836CA6FF1EF1EEE500166AAC /* UserSettingsViewController.swift */; };
+		8370E74C1EFEAC6300DCCB44 /* ParkMueDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8370E74B1EFEAC6300DCCB44 /* ParkMueDetailViewController.swift */; };
 		8377E7861EE75F0A0072A211 /* MovieTheaterDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8377E7851EE75F0A0072A211 /* MovieTheaterDetailViewController.swift */; };
 		8377E78B1EE762F70072A211 /* TheaterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8377E7891EE762F70072A211 /* TheaterTableViewCell.swift */; };
 		8377E78C1EE762F70072A211 /* TheaterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8377E78A1EE762F70072A211 /* TheaterTableViewCell.xib */; };
@@ -62,6 +63,7 @@
 		8332225D1EEDCB5800089A50 /* WeatherCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeatherCollectionViewCell.xib; sourceTree = "<group>"; };
 		836CA6FD1EF1D3CE00166AAC /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		836CA6FF1EF1EEE500166AAC /* UserSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettingsViewController.swift; sourceTree = "<group>"; };
+		8370E74B1EFEAC6300DCCB44 /* ParkMueDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkMueDetailViewController.swift; sourceTree = "<group>"; };
 		8377E7851EE75F0A0072A211 /* MovieTheaterDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieTheaterDetailViewController.swift; sourceTree = "<group>"; };
 		8377E7891EE762F70072A211 /* TheaterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheaterTableViewCell.swift; sourceTree = "<group>"; };
 		8377E78A1EE762F70072A211 /* TheaterTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TheaterTableViewCell.xib; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				837880CA1EE4D8B30021A47A /* DetailViewController.swift */,
 				837C98D91EEB281700CE04C1 /* RestaurantDetailViewController.swift */,
 				8377E7851EE75F0A0072A211 /* MovieTheaterDetailViewController.swift */,
+				8370E74B1EFEAC6300DCCB44 /* ParkMueDetailViewController.swift */,
 			);
 			name = "Detail Screens";
 			sourceTree = "<group>";
@@ -393,6 +396,7 @@
 				83F9F78B1EDDE54E00E2FF6E /* SwiftyJSON.swift in Sources */,
 				83F9F7891EDDE1F500E2FF6E /* GooglePlacesAPI.swift in Sources */,
 				837880CB1EE4D8B30021A47A /* DetailViewController.swift in Sources */,
+				8370E74C1EFEAC6300DCCB44 /* ParkMueDetailViewController.swift in Sources */,
 				833222571EEDAB8F00089A50 /* LoginSignupViewController.swift in Sources */,
 				8332224F1EEC91DC00089A50 /* SWRevealViewController.m in Sources */,
 				83288F791EFDE61500D504F1 /* DOFavoriteButton.swift in Sources */,

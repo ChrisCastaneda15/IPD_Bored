@@ -195,8 +195,12 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
             performSegue(withIdentifier: "restaurantDetailVC", sender: carousel);
         case "event":
             performSegue(withIdentifier: "eventDetailVC", sender: carousel);
+        case "museum":
+            performSegue(withIdentifier: "parkMueDetailVC", sender: carousel);
+        case "park":
+            performSegue(withIdentifier: "parkMueDetailVC", sender: carousel);
         default:
-            performSegue(withIdentifier: "detailVC", sender: carousel);
+            performSegue(withIdentifier: "parkMueDetailVC", sender: carousel);
         }
         
     }
@@ -212,8 +216,14 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
         case "event":
             let eDVC = segue.destination as! EventDetailViewController
             eDVC.placeInfo = selectedPlace
+        case "museum":
+            let pmDVC = segue.destination as! ParkMueDetailViewController
+            pmDVC.placeInfo = selectedPlace
+        case "park":
+            let pmDVC = segue.destination as! ParkMueDetailViewController
+            pmDVC.placeInfo = selectedPlace
         default:
-            let dVC = segue.destination as! DetailViewController
+            let dVC = segue.destination as! ParkMueDetailViewController
             dVC.placeInfo = selectedPlace
         }
     }
@@ -242,81 +252,7 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
         }
         
     }
-    
-//    func checkCoreData(){
-//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//        
-//        let managedContext = appDelegate.managedObjectContext
-//        
-//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Champion")
-//        
-//        do {
-//            let results = try managedContext.fetch(fetchRequest)
-//            
-//            if let chamz = results as? [NSManagedObject] {
-//                for i in chamz{
-//                    let n = i.value(forKey: "name")! as! String
-//                    let k = i.value(forKey: "key")! as! String
-//                    let t = i.value(forKey: "title")! as! String
-//                    let d = i.value(forKey: "id")! as! Int
-//                    let img = UIImage(data: i.value(forKey: "image") as! Data)
-//                    
-//                    print(n);
-//                    let c = ChampionInformation(name: n, key: k, title: t, id: d, img: img!);
-//                    dict.updateValue(c, forKey: c.champID);
-//                    champs.append(c);
-//                }
-//                champCollectionView.isHidden = false;
-//                champCollectionView.reloadData();
-//                if champCollectionView.numberOfItems(inSection: 0) != 0 {
-//                    doLoading();
-//                    for i in navBar {
-//                        i.isHidden = false;
-//                    }
-//                    toolbar.isHidden = false;
-//                    statsButton.isHidden = false;
-//                }
-//                
-//                if chamz.count == 0 {
-//                    let urlz = URL(string: "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key=\(key)");
-//                    
-//                    if let url2 = urlz {
-//                        let request = URLRequest(url: url2);
-//                        
-//                        _ = NSURLConnection(request: request, delegate: self, startImmediately: true);
-//                    };
-//                }
-//            }
-//            
-//            
-//            
-//        } catch let error as NSError {
-//            print("Could not fetch \(error), \(error.userInfo)")
-//        }
-//    }
-    
-//    func clearCoreData() {
-//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
-//        
-//        let appDelegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
-//        
-//        let managedContext = appDelegate.managedObjectContext
-//        
-//        fetchRequest.entity = NSEntityDescription.entity(forEntityName: "Champion", in: managedContext)
-//        fetchRequest.includesPropertyValues = false
-//        do {
-//            if let results = try managedContext.fetch(fetchRequest) as? [NSManagedObject] {
-//                for result in results {
-//                    managedContext.delete(result)
-//                }
-//                
-//                try managedContext.save()
-//            }
-//        } catch {
-//            print("NOPE");
-//        }
-//    }
-    
+
     
     @IBAction func openFilterMenu(_ sender: Any) {
         let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "filterNavCon") as! UINavigationController

@@ -15,6 +15,8 @@ target 'BoredTestFacility' do
   pod 'SDWebImage', '~>3.8'
   pod 'iCarousel', '~> 1.8'
   pod 'SwiftyGif', '~> 3.0'
+  pod 'ImageSlideshow'
+  pod "ImageSlideshow/SDWebImage"
   pod 'MZFormSheetPresentationController'
   pod "TextFieldEffects"
   pod 'Firebase/Core'
