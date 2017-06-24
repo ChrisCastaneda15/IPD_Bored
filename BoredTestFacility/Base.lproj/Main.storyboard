@@ -2574,7 +2574,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="rkd-Ni-MGH" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="ROC-4e-jxB">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ROC-4e-jxB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -2595,7 +2595,7 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="ZSd-sb-pOd">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZSd-sb-pOd">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -2615,7 +2615,7 @@
                     <toolbarItems/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="GpH-Qv-Yhx">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="GpH-Qv-Yhx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -2765,7 +2765,7 @@
                     <toolbarItems/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Qbl-x3-I5n">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Qbl-x3-I5n">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -2823,7 +2823,6 @@
                                                             <state key="normal" title="Buy Tickets"/>
                                                             <connections>
                                                                 <action selector="buyTickets:" destination="vQQ-dm-zkv" eventType="touchUpInside" id="y4y-78-o3d"/>
-                                                                <action selector="openInMaps:" destination="vQQ-dm-zkv" eventType="touchUpInside" id="seZ-7o-fxD"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -3120,7 +3119,7 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="6Pf-h0-sge">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="6Pf-h0-sge">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
