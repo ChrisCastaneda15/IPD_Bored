@@ -53,6 +53,19 @@ class SettingsViewController: UIViewController {
             formSheetController.allowDismissByPanningPresentedView = true
             self.present(formSheetController, animated: true, completion: nil)
         }
+        else if sender.tag == 1 {
+            let alertController = UIAlertController(title: "Delete Favorites!", message: "Are you sure you want to delete your favorites?", preferredStyle: UIAlertControllerStyle.alert)
+            
+            let okAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default)
+            let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { (act) in
+                let g = GooglePlacesAPI()
+                g.deleteAllFav()
+            })
+            
+            alertController.addAction(deleteAction)
+            alertController.addAction(okAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
         else if sender.tag == 2 {
             
             let alertController = UIAlertController(title: "Delete Account!", message: "Are you sure you want to delete your account?", preferredStyle: UIAlertControllerStyle.alert)
@@ -71,7 +84,7 @@ class SettingsViewController: UIViewController {
 
             alertController.addAction(deleteAction)
             alertController.addAction(okAction)
-                        self.present(alertController, animated: true, completion: nil)
+            self.present(alertController, animated: true, completion: nil)
         }
     }
     

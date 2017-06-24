@@ -148,6 +148,16 @@ class SideMenuViewController: UIViewController, UICollectionViewDelegate, UIColl
                 performSegue(withIdentifier: "goHome", sender: sender)
             }
             
+        case 1:
+            print("goToFavs")
+            if revealViewController().frontViewController.childViewControllers[0] is FavoritesViewController {
+                revealViewController().revealToggle(animated: true)
+            }
+            else {
+                performSegue(withIdentifier: "goFavs", sender: sender)
+            }
+
+            
         case 2:
             print("goToSettings")
             if revealViewController().frontViewController.childViewControllers[0] is SettingsViewController {

@@ -9,18 +9,29 @@
 import UIKit
 import MapKit
 import GooglePlaces
+import UberRides
 
-class DetailViewController: UIViewController, MKMapViewDelegate {
+class DetailViewController: UIViewController, MKMapViewDelegate, RideRequestButtonDelegate {
 
+    let googlePlacesAPI = GooglePlacesAPI();
+    
     @IBOutlet weak var placeNameLabel: UILabel!
     @IBOutlet weak var placeImageView: UIImageView!
     @IBOutlet weak var placeDescTextView: UITextView!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var navBar: UIView!
+    @IBOutlet weak var favButton: DOFavoriteButton!
+    @IBOutlet weak var uberButtonView: UIView!
+    
+    
+    let defaults = UserDefaults.standard
     
     var placeInfo = PlaceInfo();
     
     var placesClient = GMSPlacesClient()
+    
+    let ridesClient = RidesClient()
+    let button = RideRequestButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +43,12 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
         
         placeDescTextView.text = ""
         
+        if googlePlacesAPI.checkFavs(place: placeInfo) == true {
+            favButton.isSelected = true
+        }
+        
+        uberSetup()
+    
         navBar.layer.shadowColor = UIColor.black.cgColor
         navBar.layer.shadowOpacity = 0.85;
         navBar.layer.shadowRadius = 10;
@@ -75,6 +92,58 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
 
     }
     
+    func uberSetup(){
+        let defaults = UserDefaults.standard
+        let lat = defaults.double(forKey: "currLat")
+        let lng = defaults.double(forKey: "currLong")
+        
+        let startCoord = CLLocation(latitude: lat, longitude: lng)
+        
+        let coord = CLLocation(latitude: Double(placeInfo.latitude)!, longitude: Double(placeInfo.longitude)!)
+        
+        let builder = RideParametersBuilder()
+            .setPickupLocation(startCoord)
+            .setDropoffLocation(coord, nickname: placeInfo.name)
+        
+        
+        ridesClient.fetchCheapestProduct(pickupLocation: startCoord, completion: {
+            product, response in
+            if let productID = product?.productID {
+                builder.setProductID(productID)
+                self.button.rideParameters = builder.build()
+
+                self.button.loadRideInformation()
+            }
+        })
+        
+        button.delegate = self
+        
+        button.center = uberButtonView.center
+        button.colorStyle = .white
+        uberButtonView.addSubview(button)
+    }
+    
+    func rideRequestButtonDidLoadRideInformation(_ button: RideRequestButton) {
+        button.sizeToFit()
+        button.center = uberButtonView.center
+    }
+    
+    func rideRequestButton(_ button: RideRequestButton, didReceiveError error: RidesError) {
+        print(error.code ?? "Error")
+    }
+    
+    @IBAction func favButtonTapped(_ sender: DOFavoriteButton) {
+        if sender.isSelected == false {
+            sender.select()
+            googlePlacesAPI.saveFavorite(place: placeInfo)
+        }
+        else {
+            sender.deselect()
+            googlePlacesAPI.deleteFav(place: placeInfo)
+        }
+    }
+    
+    
     func centerMapOnLocation(location: CLLocation) {
         let regionRadius: CLLocationDistance = 1000
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius * 2.0, regionRadius * 2.0)
@@ -86,9 +155,6 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
     
     @IBAction func close(_ sender: Any) {
         dismiss(animated: true, completion: nil)
-    }
-
-    @IBAction func RequestUber(_ sender: Any) {
     }
 
     @IBAction func openInMaps(_ sender: Any) {

@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		545C6B134F775159EF70AA2D /* Pods_BoredTestFacility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7BA80EE2E5064D9F0329952 /* Pods_BoredTestFacility.framework */; };
+		830551421EFE01F6001A9E53 /* FavoriteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830551401EFE01F6001A9E53 /* FavoriteTableViewCell.swift */; };
+		830551431EFE01F6001A9E53 /* FavoriteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 830551411EFE01F6001A9E53 /* FavoriteTableViewCell.xib */; };
+		830551451EFE0717001A9E53 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830551441EFE0717001A9E53 /* FavoritesViewController.swift */; };
+		83288F791EFDE61500D504F1 /* DOFavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83288F781EFDE61500D504F1 /* DOFavoriteButton.swift */; };
 		8328E3151EF9A79C001E41BF /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8328E3141EF9A79C001E41BF /* EventDetailViewController.swift */; };
 		8332224F1EEC91DC00089A50 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8332224E1EEC91DC00089A50 /* SWRevealViewController.m */; };
 		833222521EEC926100089A50 /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 833222511EEC926100089A50 /* iCarousel.m */; };
@@ -40,6 +44,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		830551401EFE01F6001A9E53 /* FavoriteTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteTableViewCell.swift; sourceTree = "<group>"; };
+		830551411EFE01F6001A9E53 /* FavoriteTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FavoriteTableViewCell.xib; sourceTree = "<group>"; };
+		830551441EFE0717001A9E53 /* FavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		83288F781EFDE61500D504F1 /* DOFavoriteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DOFavoriteButton.swift; sourceTree = "<group>"; };
 		8328E3141EF9A79C001E41BF /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 		8332224C1EEC91DB00089A50 /* BoredTestFacility-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BoredTestFacility-Bridging-Header.h"; sourceTree = "<group>"; };
 		8332224D1EEC91DC00089A50 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
@@ -101,6 +109,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		8305513D1EFE012D001A9E53 /* FavCell */ = {
+			isa = PBXGroup;
+			children = (
+				830551401EFE01F6001A9E53 /* FavoriteTableViewCell.swift */,
+				830551411EFE01F6001A9E53 /* FavoriteTableViewCell.xib */,
+			);
+			name = FavCell;
+			sourceTree = "<group>";
+		};
 		833222531EECBB5000089A50 /* Detail Screens */ = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +143,7 @@
 			children = (
 				8332225A1EEDB8FB00089A50 /* GoogleService-Info.plist */,
 				833222581EEDAD1C00089A50 /* cityGif.gif */,
+				83288F781EFDE61500D504F1 /* DOFavoriteButton.swift */,
 				8332224D1EEC91DC00089A50 /* SWRevealViewController.h */,
 				8332224E1EEC91DC00089A50 /* SWRevealViewController.m */,
 				833222501EEC926100089A50 /* iCarousel.h */,
@@ -202,7 +220,9 @@
 				83CF236F1EEE18E70041C9A1 /* FilterMenuViewController.swift */,
 				836CA6FD1EF1D3CE00166AAC /* SettingsViewController.swift */,
 				836CA6FF1EF1EEE500166AAC /* UserSettingsViewController.swift */,
+				830551441EFE0717001A9E53 /* FavoritesViewController.swift */,
 				833222531EECBB5000089A50 /* Detail Screens */,
+				8305513D1EFE012D001A9E53 /* FavCell */,
 				8377E78D1EE762FB0072A211 /* TheaterCell */,
 				833222601EEDCB6100089A50 /* WeatherCell */,
 				837880C91EE4B4DA0021A47A /* CarouselView */,
@@ -295,6 +315,7 @@
 				83911B861EDDDC9700526994 /* Assets.xcassets in Resources */,
 				8332225F1EEDCB5900089A50 /* WeatherCollectionViewCell.xib in Resources */,
 				837880C81EE4B4060021A47A /* PlaceCarouselView.xib in Resources */,
+				830551431EFE01F6001A9E53 /* FavoriteTableViewCell.xib in Resources */,
 				833222591EEDAD1C00089A50 /* cityGif.gif in Resources */,
 				83911B811EDDDC9700526994 /* Main.storyboard in Resources */,
 			);
@@ -374,7 +395,10 @@
 				837880CB1EE4D8B30021A47A /* DetailViewController.swift in Sources */,
 				833222571EEDAB8F00089A50 /* LoginSignupViewController.swift in Sources */,
 				8332224F1EEC91DC00089A50 /* SWRevealViewController.m in Sources */,
+				83288F791EFDE61500D504F1 /* DOFavoriteButton.swift in Sources */,
+				830551451EFE0717001A9E53 /* FavoritesViewController.swift in Sources */,
 				836CA6FE1EF1D3CE00166AAC /* SettingsViewController.swift in Sources */,
+				830551421EFE01F6001A9E53 /* FavoriteTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

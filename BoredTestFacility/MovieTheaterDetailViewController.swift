@@ -8,12 +8,15 @@
 
 import UIKit
 import MapKit
+import UberRides
 
-class MovieTheaterDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate {
+class MovieTheaterDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, RideRequestButtonDelegate  {
     let googlePlacesAPI = GooglePlacesAPI();
     var placeInfo = PlaceInfo()
     var moviesInTheater = [MovieDetail]()
     var moviePosters = [String]()
+    let ridesClient = RidesClient()
+    let button = RideRequestButton()
     
     @IBOutlet weak var placeNameLabel: UILabel!
     @IBOutlet weak var placeImageView: UIImageView!
@@ -21,6 +24,9 @@ class MovieTheaterDetailViewController: UIViewController, UITableViewDataSource,
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var navBar: UIView!
     @IBOutlet weak var showtimesBar: UIView!
+    @IBOutlet weak var favButton: DOFavoriteButton!
+    @IBOutlet weak var uberButtonView: UIView!
+    
     
     
     override func viewDidLoad() {
@@ -33,6 +39,20 @@ class MovieTheaterDetailViewController: UIViewController, UITableViewDataSource,
         nc.addObserver(forName:Notification.Name(rawValue:"MOVIEPOSTER"), object:nil, queue:nil, using:catchNotification)
         
         // Do any additional setup after loading the view.
+        
+        favButton.image = #imageLiteral(resourceName: "star")
+        favButton.contentMode = .center
+        favButton.imageColorOff = UIColor.BoredColors.DeepBlue
+        favButton.imageColorOn = UIColor.BoredColors.OffWhite
+        favButton.circleColor = UIColor.yellow
+        favButton.lineColor = UIColor.yellow
+        favButton.duration = 1.0
+        
+        if googlePlacesAPI.checkFavs(place: placeInfo) == true {
+            favButton.isSelected = true
+        }
+        
+        uberSetup()
         
         navBar.layer.shadowColor = UIColor.black.cgColor
         navBar.layer.shadowOpacity = 0.85;
@@ -54,6 +74,58 @@ class MovieTheaterDetailViewController: UIViewController, UITableViewDataSource,
         tableView.isHidden = true
     }
     
+    func uberSetup(){
+        let defaults = UserDefaults.standard
+        let lat = defaults.double(forKey: "currLat")
+        let lng = defaults.double(forKey: "currLong")
+        
+        let startCoord = CLLocation(latitude: lat, longitude: lng)
+        
+        let coord = CLLocation(latitude: Double(placeInfo.latitude)!, longitude: Double(placeInfo.longitude)!)
+        
+        let builder = RideParametersBuilder()
+            .setPickupLocation(startCoord)
+            .setDropoffLocation(coord, nickname: placeInfo.name)
+        
+        
+        ridesClient.fetchCheapestProduct(pickupLocation: startCoord, completion: {
+            product, response in
+            if let productID = product?.productID {
+                builder.setProductID(productID)
+                self.button.rideParameters = builder.build()
+                
+                self.button.loadRideInformation()
+            }
+        })
+        
+        button.delegate = self
+        
+        button.center = uberButtonView.center
+        button.colorStyle = .white
+        uberButtonView.addSubview(button)
+    }
+    
+    func rideRequestButtonDidLoadRideInformation(_ button: RideRequestButton) {
+        button.sizeToFit()
+        button.center = uberButtonView.center
+    }
+    
+    func rideRequestButton(_ button: RideRequestButton, didReceiveError error: RidesError) {
+        print(error.code ?? "Error")
+    }
+    
+    @IBAction func favButtonTapped(_ sender: DOFavoriteButton) {
+        if sender.isSelected == false {
+            sender.select()
+            googlePlacesAPI.saveFavorite(place: placeInfo)
+        }
+        else {
+            sender.deselect()
+            googlePlacesAPI.deleteFav(place: placeInfo)
+        }
+    }
+    
+
     public func catchNotification(notification:Notification) -> Void {
         if notification.name.rawValue == "MOVIEINFO" {
             guard let userInfo = notification.userInfo,
@@ -152,9 +224,6 @@ class MovieTheaterDetailViewController: UIViewController, UITableViewDataSource,
         mapItem.name = placeInfo.name
         mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
     }
-    
-    
-    
     
     @IBAction func close(_ sender: Any) {
         dismiss(animated: true, completion: nil)

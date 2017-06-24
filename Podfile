@@ -21,4 +21,5 @@ target 'BoredTestFacility' do
   pod 'Firebase/Database'
   pod 'Firebase/Auth'
   pod 'Firebase/Storage'
+  pod 'UberRides', :git => 'https://github.com/long/rides-ios-sdk.git', :branch => 'swift-3-dev’
 end

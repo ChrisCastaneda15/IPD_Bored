@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
+		<key>DOFavoriteButton.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>13</integer>
+		</dict>
 		<key>GTMSessionFetcher.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -28,6 +33,11 @@
 		<dict>
 			<key>orderHint</key>
 			<integer>12</integer>
+		</dict>
+		<key>ObjectMapper.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>14</integer>
 		</dict>
 		<key>Pods-BoredTestFacility.xcscheme</key>
 		<dict>
@@ -58,6 +68,11 @@
 		<dict>
 			<key>orderHint</key>
 			<integer>10</integer>
+		</dict>
+		<key>UberRides.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>15</integer>
 		</dict>
 		<key>iCarousel.xcscheme</key>
 		<dict>
@@ -117,12 +132,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>3642DE7C0E24C6E72C8F1A4FDC271C98</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>3C180CC4A1E831AA046D3F17C20978B1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>3CB17C6B6D5F08F6B3350CCEC6B1E0F6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3D2ED582E5A027F69A605E9A27E6B5C0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>40A16CB0CB5FD49FD533BBC4F0A0C888</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -148,6 +178,16 @@
 			<true/>
 		</dict>
 		<key>59AAE6A391A50B47D04B46877E9C6328</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6B0FEC995792982186D14829D959EB8D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6D7839250B1429C9ECA5D19126ED2BD8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -182,7 +222,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>8770353D6AAD3C24FDE5F927A3B478A3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8BA55E1A6F4F0BCB36FE5C9CCBF61BE7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -212,7 +262,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>AA56A47037A5B4FA3440EB2AC0B4C63C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>AAE464CF54B302AC66781D4FB0A5E2ED</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B1D0B8298CA2556D27E4E20FC00E0ABC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -228,6 +288,21 @@
 			<true/>
 		</dict>
 		<key>C052BEBFBD0AB5218CC64BA3450F6547</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C147FB851C4B97A7B663598589B9ABA5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CA05524B9C0F37500B008F4A08299778</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CD6C9FB6B052E1CF663F8A56041EA163</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -248,6 +323,16 @@
 			<true/>
 		</dict>
 		<key>E43D3FCAEA3150481BE330C67E3F475B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EB3C5E9B31CECC0277AC87CE8B9F0BCE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F233A21687800443DDF150B2F87E6B87</key>
 		<dict>
 			<key>primary</key>
 			<true/>

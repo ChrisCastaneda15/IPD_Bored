@@ -21,6 +21,7 @@ class EventDetailViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var eventVenueImageView: UIImageView!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var navBar: UIView!
+    @IBOutlet weak var favButton: DOFavoriteButton!
     
     var ticketURL = ""
     
@@ -37,6 +38,10 @@ class EventDetailViewController: UIViewController, MKMapViewDelegate {
         navBar.layer.shadowOpacity = 0.85;
         navBar.layer.shadowRadius = 10;
         
+        if googlePlacesAPI.checkFavs(place: placeInfo) == true {
+            favButton.isSelected = true
+        }
+        
         eventNameLabel.text = placeInfo.name
         eventImageLabel.sd_setImage(with: URL(string: placeInfo.imageString), placeholderImage: UIImage(named: "placeholder.png"))
         let placeLocation = CLLocation(latitude: Double(placeInfo.latitude)!, longitude: Double(placeInfo.longitude)!)
@@ -45,6 +50,18 @@ class EventDetailViewController: UIViewController, MKMapViewDelegate {
         googlePlacesAPI.getEventDetail(id: placeInfo.placeID)
         
     }
+    
+    @IBAction func favButtonTapped(_ sender: DOFavoriteButton) {
+        if sender.isSelected == false {
+            sender.select()
+            googlePlacesAPI.saveFavorite(place: placeInfo)
+        }
+        else {
+            sender.deselect()
+            googlePlacesAPI.deleteFav(place: placeInfo)
+        }
+    }
+    
     
     public func catchNotification(notification:Notification) -> Void {
         if notification.name.rawValue == "EVENTINFO" {

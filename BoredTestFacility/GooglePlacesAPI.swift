@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import GooglePlaces
+import CoreData
 
 public class GooglePlacesAPI{
     let KEY_GOOGLE = "AIzaSyCpmvfI0yYJRIx04H1rhVIIB4ywEgw4I5w"
@@ -18,6 +19,145 @@ public class GooglePlacesAPI{
         "user-key": "2780090e35e9d807b1f793e96b2a6f69"
     ]
     let KEY_WEATHER = "b5d6591a8a63a613"
+    
+    
+    func saveFavorite(place: PlaceInfo){
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let entity = NSEntityDescription.entity(forEntityName: "PlaceDetail",in: managedContext)!
+        
+        let p = NSManagedObject(entity: entity, insertInto: managedContext)
+        
+        p.setValue(place.name, forKey: "name")
+        p.setValue(place.placeID, forKey: "id")
+        p.setValue(place.placeType, forKey: "placetype")
+        p.setValue(place.imageString, forKey: "imagestring")
+        p.setValue(place.longitude, forKey: "long")
+        p.setValue(place.latitude, forKey: "lat")
+        
+        do {
+            try managedContext.save()
+        } catch let error as NSError  {
+            print("Could not save \(error), \(error.userInfo)")
+        }
+        
+    }
+    
+    func getFavorites()->[String:PlaceInfo]{
+        var favPlaces = [String:PlaceInfo]();
+        
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return favPlaces
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "PlaceDetail")
+        
+        do {
+            let results = try managedContext.fetch(fetchRequest)
+            
+            if let favs = results as? [NSManagedObject] {
+                for i in favs{
+                    let n = i.value(forKey: "name")! as! String
+                    let k = i.value(forKey: "id")! as! String
+                    let img = i.value(forKey: "imagestring")! as! String
+                    let t = i.value(forKey: "placetype")! as! String
+                    let lat = i.value(forKey: "lat")! as! String
+                    let long = i.value(forKey: "long")! as! String
+                    
+                    print(n);
+                    let place = PlaceInfo(name: n, place: k, image: img, placeType: t, lat: lat, long: long)
+                    favPlaces.updateValue(place, forKey: k);
+                }
+                
+            }
+            
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
+        return favPlaces
+    }
+    
+    func checkFavs(place: PlaceInfo)->Bool{
+        let favPlaces = getFavorites()
+        
+        if favPlaces[place.placeID] != nil {
+            return true
+        }
+        
+        return false
+    }
+    
+    func deleteFav(place: PlaceInfo){
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
+        
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return
+        }
+        
+
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        fetchRequest.entity = NSEntityDescription.entity(forEntityName: "PlaceDetail", in: managedContext)
+        fetchRequest.includesPropertyValues = false
+        do {
+            if let results = try managedContext.fetch(fetchRequest) as? [NSManagedObject] {
+                for result in results {
+                    if place.placeID == result.value(forKey: "id")! as! String {
+                        managedContext.delete(result)
+                        break
+                    }
+                }
+                
+                try managedContext.save()
+            }
+        } catch {
+            print("NOPE");
+        }
+        
+        
+    }
+    
+    func deleteAllFav(){
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
+        
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        fetchRequest.entity = NSEntityDescription.entity(forEntityName: "PlaceDetail", in: managedContext)
+        fetchRequest.includesPropertyValues = false
+        do {
+            if let results = try managedContext.fetch(fetchRequest) as? [NSManagedObject] {
+                for result in results {
+                    managedContext.delete(result)
+                }
+                
+                try managedContext.save()
+            }
+        } catch {
+            print("NOPE");
+        }
+        
+    }
+    
+    func requestUber(place: PlaceInfo){
+
+    }
+    
     
     func searchNearby(lat: Double, long:Double, filters: [Bool], miles: Double){
         

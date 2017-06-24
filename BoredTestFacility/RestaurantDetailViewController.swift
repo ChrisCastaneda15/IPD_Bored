@@ -8,13 +8,16 @@
 
 import UIKit
 import MapKit
+import UberRides
 
-class RestaurantDetailViewController: UIViewController, MKMapViewDelegate {
+class RestaurantDetailViewController: UIViewController, MKMapViewDelegate, RideRequestButtonDelegate  {
     
     let googlePlacesAPI = GooglePlacesAPI();
     var placeInfo = PlaceInfo()
     var menuLink = ""
     var resLink = ""
+    let ridesClient = RidesClient()
+    let button = RideRequestButton()
     
     @IBOutlet weak var placeNameLabel: UILabel!
     @IBOutlet weak var placeImageView: UIImageView!
@@ -24,6 +27,9 @@ class RestaurantDetailViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var navBar: UIView!
     @IBOutlet weak var servesLabel: UILabel!
+    @IBOutlet weak var favButton: DOFavoriteButton!
+    @IBOutlet weak var uberButtonView: UIView!
+    
     
     
     override func viewDidLoad() {
@@ -41,9 +47,15 @@ class RestaurantDetailViewController: UIViewController, MKMapViewDelegate {
         placeImageView.image = #imageLiteral(resourceName: "placeholder")
         //placeImageView.sd_setImage(with: URL(string: placeInfo.imageString), placeholderImage: UIImage(named: "placeholder.png"))
         
+        if googlePlacesAPI.checkFavs(place: placeInfo) == true {
+            favButton.isSelected = true
+        }
+        
         for label in priceLabels {
             label.text = ""
         }
+        
+        uberSetup()
         
         avgPriceLabel.text = ""
         
@@ -55,6 +67,18 @@ class RestaurantDetailViewController: UIViewController, MKMapViewDelegate {
         navBar.layer.shadowOpacity = 0.85;
         navBar.layer.shadowRadius = 10;
     }
+    
+    @IBAction func favButtonTapped(_ sender: DOFavoriteButton) {
+        if sender.isSelected == false {
+            sender.select()
+            googlePlacesAPI.saveFavorite(place: placeInfo)
+        }
+        else {
+            sender.deselect()
+            googlePlacesAPI.deleteFav(place: placeInfo)
+        }
+    }
+    
     
     public func catchNotification(notification:Notification) -> Void {
         if notification.name.rawValue == "RESTINFO" {
@@ -107,6 +131,46 @@ class RestaurantDetailViewController: UIViewController, MKMapViewDelegate {
         if resLink != "" {
             UIApplication.shared.open(URL(string: resLink)!, options: [:], completionHandler: nil)
         }
+    }
+    
+    func uberSetup(){
+        let defaults = UserDefaults.standard
+        let lat = defaults.double(forKey: "currLat")
+        let lng = defaults.double(forKey: "currLong")
+        
+        let startCoord = CLLocation(latitude: lat, longitude: lng)
+        
+        let coord = CLLocation(latitude: Double(placeInfo.latitude)!, longitude: Double(placeInfo.longitude)!)
+        
+        let builder = RideParametersBuilder()
+            .setPickupLocation(startCoord)
+            .setDropoffLocation(coord, nickname: placeInfo.name)
+        
+        
+        ridesClient.fetchCheapestProduct(pickupLocation: startCoord, completion: {
+            product, response in
+            if let productID = product?.productID {
+                builder.setProductID(productID)
+                self.button.rideParameters = builder.build()
+                
+                self.button.loadRideInformation()
+            }
+        })
+        
+        button.delegate = self
+        
+        button.center = uberButtonView.center
+        button.colorStyle = .white
+        uberButtonView.addSubview(button)
+    }
+    
+    func rideRequestButtonDidLoadRideInformation(_ button: RideRequestButton) {
+        button.sizeToFit()
+        button.center = uberButtonView.center
+    }
+    
+    func rideRequestButton(_ button: RideRequestButton, didReceiveError error: RidesError) {
+        print(error.code ?? "Error")
     }
     
     @IBAction func viewMenuButton(_ sender: Any) {

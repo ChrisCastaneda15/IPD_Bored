@@ -2,6 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>UberServerToken</key>
+    <string>b25Z5rwOqS8pTlGzmZHADmBYo_cp-EweBkaI2ARe</string>
+    <key>UberClientID</key>
+    <string>TVRt3_ygxZffq-9u9Y8Hgp0q4bIWYRDt</string>
+        <key>UberDisplayName</key>
+        <string>Bored App</string>
+            <key>UberCallbackURIs</key>
+            <array>
+                <dict>
+                    <key>UberCallbackURIType</key>
+                    <string>General</string>
+                    <key>URIString</key>
+                    <string>http://localhost/</string>
+                    </dict>
+                </array>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>uber</string>
+        <string>uberauth</string>
+    </array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>To set a User Image.</string>
 	<key>NSCameraUsageDescription</key>

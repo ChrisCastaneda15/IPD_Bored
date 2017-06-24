@@ -18,6 +18,7 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
     let googlePlacesAPI = GooglePlacesAPI();
     var placeDict = [String:PlaceInfo]();
     var locationManager: CLLocationManager?
+    let defaults = UserDefaults.standard
     
     var currentLocation = CLLocation()
     
@@ -93,6 +94,9 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
         self.currentLocation = locations[locations.count - 1]
         //NY LAT:40.752357 LONG:-73.981569
         
+        self.defaults.set(Double(currentLocation.coordinate.longitude), forKey: "currLong")
+        self.defaults.set(Double(currentLocation.coordinate.latitude), forKey: "currLat")
+        
         if gotInfo == false{
             CLGeocoder().reverseGeocodeLocation(currentLocation) { (pmarks, error) in
                 if pmarks?.count != 0 {
@@ -103,9 +107,9 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
                             countOrState = p.administrativeArea
                         }
                         
-                        let defaults = UserDefaults.standard
-                        defaults.set("\(countOrState!)/\(city).json", forKey: "wUrl")
-                        defaults.set(p.isoCountryCode, forKey: "cCode")
+                        
+                        self.defaults.set("\(countOrState!)/\(city).json", forKey: "wUrl")
+                        self.defaults.set(p.isoCountryCode, forKey: "cCode")
                     }
                     
                 }
@@ -238,6 +242,81 @@ class ViewController: UIViewController, iCarouselDataSource, iCarouselDelegate, 
         }
         
     }
+    
+//    func checkCoreData(){
+//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//        
+//        let managedContext = appDelegate.managedObjectContext
+//        
+//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Champion")
+//        
+//        do {
+//            let results = try managedContext.fetch(fetchRequest)
+//            
+//            if let chamz = results as? [NSManagedObject] {
+//                for i in chamz{
+//                    let n = i.value(forKey: "name")! as! String
+//                    let k = i.value(forKey: "key")! as! String
+//                    let t = i.value(forKey: "title")! as! String
+//                    let d = i.value(forKey: "id")! as! Int
+//                    let img = UIImage(data: i.value(forKey: "image") as! Data)
+//                    
+//                    print(n);
+//                    let c = ChampionInformation(name: n, key: k, title: t, id: d, img: img!);
+//                    dict.updateValue(c, forKey: c.champID);
+//                    champs.append(c);
+//                }
+//                champCollectionView.isHidden = false;
+//                champCollectionView.reloadData();
+//                if champCollectionView.numberOfItems(inSection: 0) != 0 {
+//                    doLoading();
+//                    for i in navBar {
+//                        i.isHidden = false;
+//                    }
+//                    toolbar.isHidden = false;
+//                    statsButton.isHidden = false;
+//                }
+//                
+//                if chamz.count == 0 {
+//                    let urlz = URL(string: "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key=\(key)");
+//                    
+//                    if let url2 = urlz {
+//                        let request = URLRequest(url: url2);
+//                        
+//                        _ = NSURLConnection(request: request, delegate: self, startImmediately: true);
+//                    };
+//                }
+//            }
+//            
+//            
+//            
+//        } catch let error as NSError {
+//            print("Could not fetch \(error), \(error.userInfo)")
+//        }
+//    }
+    
+//    func clearCoreData() {
+//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
+//        
+//        let appDelegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
+//        
+//        let managedContext = appDelegate.managedObjectContext
+//        
+//        fetchRequest.entity = NSEntityDescription.entity(forEntityName: "Champion", in: managedContext)
+//        fetchRequest.includesPropertyValues = false
+//        do {
+//            if let results = try managedContext.fetch(fetchRequest) as? [NSManagedObject] {
+//                for result in results {
+//                    managedContext.delete(result)
+//                }
+//                
+//                try managedContext.save()
+//            }
+//        } catch {
+//            print("NOPE");
+//        }
+//    }
+    
     
     @IBAction func openFilterMenu(_ sender: Any) {
         let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "filterNavCon") as! UINavigationController
