@@ -68,7 +68,7 @@ class ParkMueDetailViewController: UIViewController, MKMapViewDelegate, RideRequ
                 desc = desc + "is currently not open now.\n"
             }
             else if place.openNowStatus == .unknown {
-                desc = desc + " may or may not be open.\n"
+                desc = desc + "may or may not be open.\n"
                 if let number = place.phoneNumber {
                     desc = desc + " Please contact \(number) if you'd like to know more.\n"
                 }

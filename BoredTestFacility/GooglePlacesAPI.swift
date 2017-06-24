@@ -196,10 +196,16 @@ public class GooglePlacesAPI{
                     if let Json = response.data{
                         let data = JSON(data: Json);
                         if let results = data["results"].array {
-                            for num in 0..<count{
+                            var n = count
+                            
+                            if count > results.count {
+                                n = results.count
+                            }
+                            
+                            for num in 0..<n{
                                 var photo = ""
-                                let photos = results[Int(num)]["photos"].array
-                                if let image = photos{
+                                let result = results[Int(num)].dictionary!
+                                if let image = result["photos"]?.array {
                                     photo = image[0]["photo_reference"].string!
                                 }
                                 let name = results[Int(num)]["name"].string!
