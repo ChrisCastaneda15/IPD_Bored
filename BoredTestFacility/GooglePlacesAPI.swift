@@ -255,7 +255,7 @@ public class GooglePlacesAPI{
     }
     
     func getBestEvents(lat: Double, long:Double){
-        let ticketmasterUrl_1 = "https://app.ticketmaster.com/discovery/v2/events.json?size=7&latlong="
+        let ticketmasterUrl_1 = "https://app.ticketmaster.com/discovery/v2/events.json?size=10&latlong="
         let ticketmasterUrl_2 = "&radius=20"
         let ticketmasterUrl_3 = "&apikey=\(KEY_TICKETMASTER)"
         let ticketmasterUrl_final = ticketmasterUrl_1 + "\(lat),\(long)" + ticketmasterUrl_2 + ticketmasterUrl_3

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.bored.chris.bored.DetailActivity"
+    tools:showIn="@layout/activity_detail">
+
+    <ImageView
+        android:id="@+id/imageView_place"
+        android:layout_width="375dp"
+        android:layout_height="211dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/placeholder" />
+
+    <TextView
+        android:id="@+id/textView_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageView_place"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/imageView_place"
+        android:layout_alignStart="@+id/imageView_place"
+        android:layout_below="@+id/textView_address"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="Navigate to Place"
+        android:textColor="@color/colorAccent" />
+
+    <TextView
+        android:id="@+id/textView_placeType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView_address"
+        android:layout_alignEnd="@+id/imageView_place"
+        android:layout_alignStart="@+id/imageView_place"
+        android:text="TextView"
+        android:textColor="@color/colorAccent" />
+
+</RelativeLayout>
