@@ -13,16 +13,26 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
 import it.sephiroth.android.library.picasso.Picasso;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity{
 
     PlaceInfo place;
     double[] lnl;
+    GoogleMap map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +40,9 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        final MapView mapView = (MapView) findViewById(R.id.mapView2);
+        mapView.onCreate(savedInstanceState);
 
         place = (PlaceInfo) getIntent().getSerializableExtra("PLACEDEET");
         lnl = getIntent().getDoubleArrayExtra("LNL");
@@ -45,7 +58,7 @@ public class DetailActivity extends AppCompatActivity {
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.placeholder)
                 .into(imageView);
-        TextView textView = (TextView) findViewById(R.id.textView_address);
+        final TextView textView = (TextView) findViewById(R.id.textView_address);
 
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
 
@@ -59,6 +72,24 @@ public class DetailActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        MapsInitializer.initialize(this);
+
+        mapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                map = googleMap;
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(place.latitude), Double.parseDouble(place.longitude)), 15));
+                MarkerOptions marker = new MarkerOptions();
+                marker.position(new LatLng(Double.parseDouble(place.latitude), Double.parseDouble(place.longitude)));
+                marker.alpha((float) 0.8);
+                marker.title(place.getName());
+                marker.snippet(String.valueOf(textView.getText()));
+                map.addMarker(marker);
+            }
+        });
+
+
 
         TextView textView1 = (TextView) findViewById(R.id.textView_placeType);
         textView1.setText(place.getPlaceType());

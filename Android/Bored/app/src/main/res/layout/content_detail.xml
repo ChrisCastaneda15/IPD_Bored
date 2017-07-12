@@ -29,17 +29,6 @@
         android:textColor="@color/colorAccent"
         android:textSize="18sp" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/imageView_place"
-        android:layout_alignStart="@+id/imageView_place"
-        android:layout_below="@+id/textView_address"
-        android:backgroundTint="@color/colorPrimary"
-        android:text="Navigate to Place"
-        android:textColor="@color/colorAccent" />
-
     <TextView
         android:id="@+id/textView_placeType"
         android:layout_width="wrap_content"
@@ -49,5 +38,24 @@
         android:layout_alignStart="@+id/imageView_place"
         android:text="TextView"
         android:textColor="@color/colorAccent" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="Navigate to Place"
+        android:textColor="@color/colorAccent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/imageView_place"
+        android:layout_alignEnd="@+id/imageView_place" />
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView_address"
+        android:layout_above="@+id/button3" />
 
 </RelativeLayout>
